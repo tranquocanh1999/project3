@@ -1,0 +1,28 @@
+{
+    "dataNull": [],
+    "data": [{
+            "id": 1,
+            "customerCode": "KH001",
+            "customerName": "Trần Quốc Anh",
+            "phoneNumber": "012346858"
+        },
+        {
+            "id": 2,
+            "customerCode": "KH002",
+            "customerName": "Ngô Gia Lâm",
+            "phoneNumber": "012346858"
+        },
+        {
+            "id": 1,
+            "customerCode": "KH003",
+            "customerName": "Ngô Gia Khánh",
+            "phoneNumber": "012346858"
+        },
+        {
+            "id": 4,
+            "customerCode": "KH004",
+            "customerName": "Trần Thị Thu",
+            "phoneNumber": "012346858"
+        }
+    ]
+}

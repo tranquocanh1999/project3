@@ -13,30 +13,24 @@
       <dx-item
         data-field="password"
         editor-type="dxTextBox"
-        :editor-options="{ stylingMode: 'filled', placeholder: 'Password', mode: 'password' }"
+        :editor-options="{ stylingMode: 'filled', placeholder: 'Mật khẩu', mode: 'password' }"
       >
-        <dx-required-rule message="Password is required" />
+        <dx-required-rule message="Mật khẩu không được để trống" />
         <dx-label :visible="false" />
       </dx-item>
       <dx-item
         data-field="confirmedPassword"
         editor-type="dxTextBox"
-        :editor-options="{ stylingMode: 'filled', placeholder: 'Confirm Password', mode: 'password' }"
+        :editor-options="{ stylingMode: 'filled', placeholder: 'Nhập lại mật khẩu', mode: 'password' }"
       >
-        <dx-required-rule message="Password is required" />
+        <dx-required-rule message="Mật khẩu không được để trống" />
         <dx-custom-rule
-          message="Passwords do not match"
+          message="Mật khẩu không khớp"
           :validation-callback="confirmPassword"
         />
         <dx-label :visible="false" />
       </dx-item>
-      <dx-item>
-        <template #default>
-          <div class='policy-info'>
-            By creating an account, you agree to the <router-link to="#">Terms of Service</router-link> and <router-link to="#">Privacy Policy</router-link>
-          </div>
-        </template>
-      </dx-item>
+     
       <dx-button-item>
         <dx-button-options
           width="100%"
@@ -49,7 +43,7 @@
       <dx-item>
         <template #default>
           <div class="login-link">
-            Have an account? <router-link to="/login">Sign In</router-link>
+            Đã có tài khoản? <router-link to="/login">Đăng nhập</router-link>
           </div>
         </template>
       </dx-item>
@@ -57,7 +51,7 @@
         <div>
           <span class="dx-button-text">
               <dx-loadIndicator v-if="loading" width="24px" height="24px" :visible="true" />
-              <span v-if="!loading">Create a new account</span>
+              <span v-if="!loading">Tạo tài khoản mới</span>
           </span>
         </div>
       </template>

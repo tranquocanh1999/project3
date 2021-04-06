@@ -6,8 +6,8 @@
         editor-type="dxTextBox"
         :editor-options="{ stylingMode: 'filled', placeholder: 'Email', mode: 'email' }"
       >
-        <dx-required-rule message="Email is required" />
-        <dx-email-rule message="Email is invalid" />
+        <dx-required-rule message="Email không được để trống" />
+        <dx-email-rule message="Email không đúng định dạng" />
         <dx-label :visible="false" />
       </dx-item>
       <dx-button-item>
@@ -23,7 +23,7 @@
       <dx-item>
         <template #default>
           <div class="login-link">
-            Return to <router-link to="/login">Sign In</router-link>
+           <router-link to="/login">Đăng nhập</router-link>
           </div>
         </template>
       </dx-item>
@@ -31,7 +31,7 @@
         <div>
           <span class="dx-button-text">
               <dx-load-indicator v-if="loading" width="24px" height="24px" :visible="true" />
-              <span v-if="!loading">Reset my password</span>
+              <span v-if="!loading">Cài lại mật khẩu</span>
           </span>
         </div>
       </template>

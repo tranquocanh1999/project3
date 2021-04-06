@@ -6,25 +6,19 @@
         editor-type="dxTextBox"
         :editor-options="{ stylingMode: 'filled', placeholder: 'Email', mode: 'email' }"
       >
-        <dx-required-rule message="Email is required" />
-        <dx-email-rule message="Email is invalid" />
+        <dx-required-rule message="Email không được để trống" />
+        <dx-email-rule message="Email không đúng định dạng " />
         <dx-label :visible="false" />
       </dx-item>
       <dx-item
         data-field='password'
         editor-type='dxTextBox'
-        :editor-options="{ stylingMode: 'filled', placeholder: 'Password', mode: 'password' }"
+        :editor-options="{ stylingMode: 'filled', placeholder: 'Mật khẩu', mode: 'password' }"
       >
-        <dx-required-rule message="Password is required" />
+        <dx-required-rule message="Mật khẩu không được để trống" />
         <dx-label :visible="false" />
       </dx-item>
-      <dx-item
-        data-field="rememberMe"
-        editor-type="dxCheckBox"
-        :editor-options="{ text: 'Remember me', elementAttr: { class: 'form-text' } }"
-      >
-        <dx-label :visible="false" />
-      </dx-item>
+     
       <dx-button-item>
         <dx-button-options
           width="100%"
@@ -37,13 +31,14 @@
       <dx-item>
         <template #default>
           <div class="link">
-            <router-link to="/reset-password">Forgot password?</router-link>
+            <router-link to="/reset-password">Quên mật khẩu?</router-link>
           </div>
         </template>
       </dx-item>
+      
       <dx-button-item>
         <dx-button-options
-          text="Create an account"
+          text="Tạo tài khoản mới"
           width="100%"
           :on-click="onCreateAccountClick"
         />
@@ -52,7 +47,7 @@
         <div>
           <span class="dx-button-text">
             <dx-load-indicator v-if="loading" width="24px" height="24px" :visible="true" />
-            <span v-if="!loading">Sign In</span>
+            <span v-if="!loading">Đăng nhập</span>
           </span>
         </div>
       </template>
@@ -61,15 +56,7 @@
 </template>
 
 <script>
-import DxLoadIndicator from "devextreme-vue/load-indicator";
-import DxForm, {
-  DxItem,
-  DxEmailRule,
-  DxRequiredRule,
-  DxLabel,
-  DxButtonItem,
-  DxButtonOptions
-} from "devextreme-vue/form";
+
 import notify from 'devextreme/ui/notify';
 
 import auth from "../auth";
@@ -98,17 +85,7 @@ export default {
       }
     }
   },
-  components: {
-    DxLoadIndicator,
-    DxForm,
-    DxEmailRule,
-    DxRequiredRule,
-    DxItem,
-    DxLabel,
-    DxButtonItem,
-    DxButtonOptions
-  }
-};
+  };
 </script>
 
 <style lang="scss">

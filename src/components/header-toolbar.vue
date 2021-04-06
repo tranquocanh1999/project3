@@ -7,11 +7,7 @@
         css-class="menu-button"
       >
         <template #default>
-          <dx-button
-            icon="menu"
-            styling-mode="text"
-            @click="toggleMenuFunc"
-          />
+          <dx-button icon="menu" styling-mode="text" @click="toggleMenuFunc" />
         </template>
       </dx-item>
 
@@ -24,7 +20,11 @@
           <div>{{ title }}</div>
         </template>
       </dx-item>
-
+      <dx-item location="before" css-class="header-title dx-toolbar-label">
+        <template>
+          <div style="margin-left:16px">Cửa hàng Tester</div>
+        </template>
+      </dx-item>
       <dx-item
         location="after"
         locate-in-menu="auto"
@@ -38,17 +38,17 @@
               height="100%"
               styling-mode="text"
             >
-              <user-panel :user="user" :menu-items="userMenuItems" menu-mode="context" />
+              <user-panel
+                :user="user"
+                :menu-items="userMenuItems"
+                menu-mode="context"
+              />
             </dx-button>
           </div>
         </template>
       </dx-item>
       <template #menuUserItem>
-        <user-panel
-          :user="user"
-          :menu-items="userMenuItems"
-          menu-mode="list"
-        />
+        <user-panel :user="user" :menu-items="userMenuItems" menu-mode="list" />
       </template>
     </dx-toolbar>
   </header>
@@ -66,26 +66,26 @@ export default {
     menuToggleEnabled: Boolean,
     title: String,
     toggleMenuFunc: Function,
-    logOutFunc: Function
+    logOutFunc: Function,
   },
   created() {
-    auth.getUser().then((e) => this.user = e.data);
+    auth.getUser().then((e) => (this.user = e.data));
   },
   data() {
     return {
-      user: { },
+      user: {},
       userMenuItems: [
         {
           text: "Profile",
           icon: "user",
-          onClick: this.onProfileClick
+          onClick: this.onProfileClick,
         },
         {
           text: "Logout",
           icon: "runner",
-          onClick: this.onLogoutClick
-        }
-      ]
+          onClick: this.onLogoutClick,
+        },
+      ],
     };
   },
   methods: {
@@ -93,22 +93,22 @@ export default {
       auth.logOut();
       this.$router.push({
         path: "/login-form",
-        query: { redirect: this.$route.path }
+        query: { redirect: this.$route.path },
       });
     },
     onProfileClick() {
       this.$router.push({
         path: "/profile",
-        query: { redirect: this.$route.path }
+        query: { redirect: this.$route.path },
       });
-    }
+    },
   },
   components: {
     DxButton,
     DxToolbar,
     DxItem,
-    UserPanel
-  }
+    UserPanel,
+  },
 };
 </script>
 

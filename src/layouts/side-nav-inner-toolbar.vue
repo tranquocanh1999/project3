@@ -22,10 +22,7 @@
         </dx-scroll-view>
       </div>
       <template #menu>
-        <side-nav-menu
-          :compact-mode="!menuOpened"
-          @click="handleSideBarClick"
-        >
+        <side-nav-menu :compact-mode="!menuOpened" @click="handleSideBarClick">
           <dx-toolbar id="navigation-header">
             <dx-item v-if="!isXSmall" location="before" css-class="menu-button">
               <template #default>
@@ -36,7 +33,10 @@
                 />
               </template>
             </dx-item>
-            <dx-item location="before" css-class="header-title dx-toolbar-label">
+            <dx-item
+              location="before"
+              css-class="header-title dx-toolbar-label"
+            >
               <template #default>
                 <div>
                   <div>{{ title }}</div>
@@ -51,20 +51,15 @@
 </template>
 
 <script>
-import DxButton from "devextreme-vue/button";
-import DxDrawer from "devextreme-vue/drawer";
-import DxScrollView from "devextreme-vue/scroll-view";
 import DxToolbar, { DxItem } from "devextreme-vue/toolbar";
 
-import HeaderToolbar from "../components/header-toolbar";
-import SideNavMenu from "../components/side-nav-menu";
 import menuItems from "../app-navigation";
 
 export default {
   props: {
     title: String,
     isXSmall: Boolean,
-    isLarge: Boolean
+    isLarge: Boolean,
   },
   methods: {
     toggleMenu(e) {
@@ -78,13 +73,13 @@ export default {
     handleSideBarClick() {
       if (this.menuOpened === false) this.menuTemporaryOpened = true;
       this.menuOpened = true;
-    }
+    },
   },
   data() {
     return {
       menuOpened: this.isLarge,
       menuTemporaryOpened: false,
-      menuItems
+      menuItems,
     };
   },
   computed: {
@@ -96,7 +91,7 @@ export default {
         minMenuSize: this.isXSmall ? 0 : 60,
         menuOpened: this.isLarge,
         closeOnOutsideClick: shaderEnabled,
-        shaderEnabled
+        shaderEnabled,
       };
     },
     headerMenuTogglerEnabled() {
@@ -104,7 +99,7 @@ export default {
     },
     scrollView() {
       return this.$refs["scrollViewRef"].instance;
-    }
+    },
   },
   watch: {
     isLarge() {
@@ -118,17 +113,12 @@ export default {
         this.menuTemporaryOpened = false;
       }
       this.scrollView.scrollTo(0);
-    }
+    },
   },
   components: {
-    DxButton,
-    DxDrawer,
-    DxScrollView,
     DxToolbar,
     DxItem,
-    HeaderToolbar,
-    SideNavMenu
-  }
+  },
 };
 </script>
 

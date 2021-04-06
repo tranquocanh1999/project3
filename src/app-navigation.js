@@ -1,21 +1,18 @@
-export default [
-  {
-    text: "Home",
-    path: "/home",
-    icon: "home"
-  },
-  {
-    text: "Examples",
-    icon: "folder",
-    items: [
-      {
-        text: "Profile",
-        path: "/profile"
-      },
-      {
-        text: "Tasks",
-        path: "/tasks"
-      }
+export default [{
+    //         text: "Home",
+    //         path: "/home",
+    //         icon: "test"
+    //     },
+    // {
+    text: "Bán Hàng",
+    icon: "user",
+    items: [{
+            text: "Tạo đơn",
+            path: "/Bill"
+        },
+        {
+            text: "Đơn hàng",
+            path: "/BillList"
+        },
     ]
-  }
-  ];
+}];

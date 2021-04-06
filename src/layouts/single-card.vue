@@ -32,7 +32,7 @@ export default {
   height: 100%;
 
   .dx-card {
-    width: 330px;
+    width: 400px;
     margin: auto auto;
     padding: 40px;
     flex-grow: 0;
@@ -55,6 +55,7 @@ export default {
         line-height: 28px;
         font-weight: 500;
         font-size: 24px;
+        margin-bottom: 10px;
       }
 
       .description {

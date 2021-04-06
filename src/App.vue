@@ -10,16 +10,14 @@
         <div class="content">
           <router-view name="content" />
         </div>
-        <template #footer>
-          <app-footer />
-        </template>
+       
       </router-view>
     </div>
   </div>
 </template>
 
 <script>
-import AppFooter from "./components/app-footer";
+
 import { sizes, subscribe, unsubscribe } from "./utils/media-query";
 
 function getScreenSizeInfo() {
@@ -60,12 +58,13 @@ export default {
   },
 
   components: {
-    AppFooter
+ 
   }
 };
 </script>
 
 <style lang="scss">
+@import "./assets/styles/root.css";
 html,
 body {
   margin: 0px;

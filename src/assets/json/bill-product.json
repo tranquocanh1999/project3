@@ -1,0 +1,33 @@
+{
+    "header": [{
+            "id": 1,
+            "class": "productCode",
+            "name": "Mã Sản Phẩm",
+            "width": "200"
+        },
+        {
+            "id": 0,
+            "class": "image",
+            "name": "Hình ảnh",
+            "width": "200"
+        },
+        {
+            "id": 2,
+            "class": "name",
+            "name": "Tên Sản Phẩm",
+            "width": "300"
+        },
+        {
+            "id": 5,
+            "class": "quantityBuy",
+            "name": "Số lượng",
+            "width": "200"
+        },
+        {
+            "id": 3,
+            "class": "priceOut",
+            "name": "Giá tiền",
+            "width": "250"
+        }
+    ]
+}

@@ -1,0 +1,12 @@
+.dx-theme-material-typography a {
+    color: #000;
+}
+
+.login-link {
+    color: #000!important;
+}
+
+.dx-toolbar .dx-toolbar-items-container {
+    height: 56px;
+    overflow: visible;
+}

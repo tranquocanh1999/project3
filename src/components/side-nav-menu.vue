@@ -102,7 +102,7 @@ export default {
   flex-direction: column;
   min-height: 100%;
   height: 100%;
-  width: 250px !important;
+  width: 200px !important;
 
   .menu-container {
     min-height: 100%;

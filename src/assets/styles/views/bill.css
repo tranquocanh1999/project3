@@ -1,0 +1,52 @@
+    .bill {
+        display: flex;
+        padding: 12px;
+        height: 100vh;
+    }
+    
+    .bill-infor {
+        width: 80%;
+        height: 90%;
+    }
+    
+    .bill-search {
+        width: 100%;
+        height: 32px;
+        padding: 8px;
+        margin-bottom: 10px;
+    }
+    
+    .bill-content {
+        padding: 8px;
+    }
+    
+    .bill-pay {
+        width: 20%;
+        height: 90%;
+        background-color: white;
+        border-radius: 4px
+    }
+    
+    #gridContainer {
+        height: 80vh;
+        border-radius: 4px;
+    }
+    
+    .bill-search-list {
+        display: flex;
+        cursor: pointer;
+        padding: 4px;
+        align-items: center;
+    }
+    
+    .bill-search-list:hover {
+        background-color: rgb(212, 209, 209)
+    }
+    
+    .bill-search-image {
+        background-repeat: no-repeat;
+        background-size: contain;
+        height: 60px;
+        width: 40px;
+        margin-right: 12px;
+    }
