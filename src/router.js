@@ -5,8 +5,10 @@ import auth from "./auth";
 
 import Home from "./views/home";
 import Profile from "./views/profile";
-import Tasks from "./views/tasks";
 import Bill from "./views/bill.vue";
+import BillList from "./views/billList.vue";
+import ProductList from "./views/productList.vue"
+import EmployeeList from "./views/employeeList.vue"
 import defaultLayout from "./layouts/side-nav-inner-toolbar";
 import simpleLayout from "./layouts/single-card";
 
@@ -31,15 +33,7 @@ const router = new Router({
                 content: Profile
             }
         },
-        {
-            path: "/tasks",
-            name: "tasks",
-            meta: { requiresAuth: true },
-            components: {
-                layout: defaultLayout,
-                content: Tasks
-            }
-        },
+
         {
             path: "/bill",
             name: "bill",
@@ -47,6 +41,33 @@ const router = new Router({
             components: {
                 layout: defaultLayout,
                 content: Bill
+            }
+        },
+        {
+            path: "/bill-list",
+            name: "bill-list",
+            meta: { requiresAuth: true },
+            components: {
+                layout: defaultLayout,
+                content: BillList
+            }
+        },
+        {
+            path: "/product-list",
+            name: "product-list",
+            meta: { requiresAuth: true },
+            components: {
+                layout: defaultLayout,
+                content: ProductList
+            }
+        },
+        {
+            path: "/employee-list",
+            name: "employee-list",
+            meta: { requiresAuth: true },
+            components: {
+                layout: defaultLayout,
+                content: EmployeeList
             }
         },
         {

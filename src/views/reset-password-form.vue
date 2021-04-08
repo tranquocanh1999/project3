@@ -23,7 +23,7 @@
       <dx-item>
         <template #default>
           <div class="login-link">
-           <router-link to="/login">Đăng nhập</router-link>
+           <router-link to="/login-form">Đăng nhập</router-link>
           </div>
         </template>
       </dx-item>

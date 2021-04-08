@@ -10,3 +10,8 @@
     height: 56px;
     overflow: visible;
 }
+
+.side-navigation-menu .menu-container .dx-treeview .dx-treeview-node[aria-level="2"] .dx-treeview-item-content {
+    font-weight: normal;
+    padding: 0 40px !important;
+}

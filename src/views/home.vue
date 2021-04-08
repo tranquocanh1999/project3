@@ -2,16 +2,7 @@
   <div>
     <h2 class="content-block">Home</h2>
     <div class="content-block">
-      <vue-button
-        class="vue-button-danger"
-        :iconStyle="{
-          width: '20px',
-          height: '20px',
-          maskPosition: '-170px -26px',
-          backgroundColor: 'red',
-        }"
-       text="test"
-      />
+    Đây là trang chủ của cừa hàng
     </div>
   </div>
 </template>

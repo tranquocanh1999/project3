@@ -1,0 +1,72 @@
+.list {
+    padding: 8px;
+}
+
+.list-content {
+    display: flex;
+}
+
+.list-grid {
+    height: 82vh;
+    margin-right: 1%;
+}
+
+.list-filter {
+    height: 80vh;
+    width: 16%;
+    background-color: white
+}
+
+.list-header {
+    height: 48px;
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+    padding-left: 16px;
+    position: relative;
+    top: 0;
+}
+
+.list-header .list-header-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: 20px;
+    min-width: 180px;
+}
+
+.list-header .list-header-selectbox {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+    color: rgb(148, 148, 148)
+}
+
+.list-header .list-header-selectbox .dx-texteditor-container {
+    border: 0;
+    width: 100px;
+    background-color: #eee;
+    margin-right: 32px;
+}
+
+.list-header .selected {
+    margin-right: 15px
+}
+
+.list-header .unselected {
+    margin-right: 30px;
+    cursor: pointer;
+    color: var(--primary)
+}
+
+.list-header .list-header-right {
+    position: absolute;
+    right: 0;
+    display: flex;
+    align-items: center;
+}
+
+.list-header .list-header-right .search {
+    margin-bottom: 10px;
+    margin-left: -10px;
+    margin-right: 0px;
+}

@@ -1,0 +1,53 @@
+{
+    "header": [{
+            "id": 1,
+            "class": "receiptSaleCode",
+            "name": "Mã biên lai",
+            "width": "200"
+        },
+        {
+            "id": 2,
+            "class": "customerName",
+            "name": "Tên khách hàng",
+            "width": "400"
+        },
+        {
+            "id": 3,
+            "class": "totalPrice",
+            "name": "Tổng tiền",
+            "width": "350"
+        },
+        {
+            "id": 4,
+            "class": "createDate",
+            "name": "Ngày bán",
+            "width": "330"
+        }
+    ],
+    "data": [{
+        "id": 1,
+        "receiptSaleCode": "HDB001",
+        "customerName": "Trần Quốc Anh",
+        "products": [{
+                "id": 1,
+                "productCode": "SP001",
+                "name": "Áo dài truyền thống",
+                "priceOut": 55000,
+                "priceIn": 5000,
+                "quantity": 15,
+                "image": "https://aodaihanh.com/wp-content/uploads/2017/12/may-ao-dai-nam-o-dau-dep-tai-tphcm-01.jpg"
+            },
+            {
+                "id": 2,
+                "name": "Quần tây nam",
+                "productCode": "SP002",
+                "priceOut": 5000,
+                "priceIn": 5000,
+                "quantityBuy": 5,
+                "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHVFalRHcQbFNqfqrvHqI6PvkYYRCLUIFKcQ&usqp=CAU"
+            }
+        ],
+        "totalPrice": 300000,
+        "createDate": "7/4/2021"
+    }]
+}

@@ -1,0 +1,73 @@
+.grid .paging {
+    position: relative;
+    bottom: 0;
+    border-top: 1px solid black;
+    height: 61px;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+}
+
+.grid {
+    background-color: white
+}
+
+.hasPaging #gridContainer {
+    height: calc(80vh - 61px);
+    border-radius: 4px;
+}
+
+#gridContainer {
+    height: 80vh;
+    border-radius: 4px;
+}
+
+.grid .page-total {
+    position: absolute;
+    left: 16px;
+    font-size: 14px;
+}
+
+.grid .page-select-box {
+    margin: 0 16px 0 10%;
+}
+
+.grid .page-left {
+    position: absolute;
+    right: 16px;
+    width: 500px;
+    display: flex;
+    align-items: center;
+}
+
+.grid .page-infor {
+    margin: 0 16px;
+    width: 200px;
+}
+
+.grid .page-paging {
+    margin-left: 16px;
+    width: 32px;
+    height: 14px;
+    display: flex;
+}
+
+.grid .page-paging .btn-prev {
+    background: url('../../img/icon.svg') no-repeat -224px -5px;
+    width: 7px;
+    height: 14px;
+    margin-right: 16px;
+    cursor: pointer;
+}
+
+.grid .page-paging .btn-next {
+    background: url('../../img/icon.svg') no-repeat -249px -5px;
+    width: 7px;
+    height: 14px;
+    cursor: pointer;
+}
+
+.grid .page-paging .disable {
+    opacity: 50%;
+    cursor: default;
+}

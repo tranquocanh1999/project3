@@ -31,6 +31,7 @@
         <vue-grid
           :header="billProductHeader"
           :data="bill.billProducts"
+          
         ></vue-grid>
       </div>
     </div>
@@ -60,11 +61,11 @@
             <div class="bill-customer-search-name">
               {{ customer.customerName }}
             </div>
-            <div class="bill-customer-search-phone">{{ customer.phone }}</div>
+            <div class="bill-customer-search-phone">{{ customer.phoneNumber  }}</div>
           </div>
         </DxPopover>
-        <div>Tên khách hàng : {{ bill.customer.customerName }}</div>
-        <div>Số điện thoại: {{ bill.customer.phoneNumber }}</div>
+        <div class="infor">Tên khách hàng : {{ bill.customer.customerName }}</div>
+        <div class="infor">Số điện thoại: {{ bill.customer.phoneNumber }}</div>
       </div>
       <div class="bill-pay-infor ">
         <h6>Thông tin hóa đơn</h6>
@@ -114,6 +115,7 @@ export default {
     onSelectProduct(e) {
       var product = { ...e };
       product.quantityBuy = 1;
+    
       var index = this.bill.billProducts.findIndex(
         (element) => element.productCode == e.productCode
       );

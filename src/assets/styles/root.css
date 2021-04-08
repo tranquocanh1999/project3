@@ -1,5 +1,7 @@
 @import './component/button.css';
 @import './component/dxNomal.css';
+@import './component/filter.css';
+@import './component/grid.css';
 @import './layout/toolbar.css';
 #app {
     font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -91,4 +93,16 @@
 a {
     text-decoration: none;
     color: none;
+}
+
+.h-full {
+    height: 100%;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.w-filter {
+    width: 83%;
 }
