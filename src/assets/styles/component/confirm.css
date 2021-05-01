@@ -1,0 +1,7 @@
+.popup-text{
+    min-height: 50%;
+}
+.popup-event{
+    float: right;
+    display: flex;
+}

@@ -1,16 +1,16 @@
 <template>
-
   <button
-    
     :style="buttonStyle"
-    :class="[text === '' ? 'noText' : 'btn',iconStyle===null?'':'hasIcon']"
+    :class="[
+      text === '' ? 'noText' : 'btn',
+      iconStyle === null ? '' : 'hasIcon',
+    ]"
     @click="onClick"
-    :type='type'
+    :type="type"
   >
-    <div class="btn-icon" v-if="iconStyle!==null" :style="iconStyle"></div>
+    <div class="btn-icon" v-if="iconStyle !== null" :style="iconStyle"></div>
     {{ text }}
   </button>
-  
 </template>
 <script>
 export default {
@@ -18,8 +18,8 @@ export default {
   props: {
     type: {
       type: String,
-      default:'',
-     },
+      default: "",
+    },
     text: {
       type: String,
       default: "",
@@ -36,8 +36,8 @@ export default {
   methods: {
     onClick() {
       this.$emit("onClick");
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped></style>

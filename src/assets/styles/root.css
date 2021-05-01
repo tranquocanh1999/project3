@@ -2,6 +2,8 @@
 @import './component/dxNomal.css';
 @import './component/filter.css';
 @import './component/grid.css';
+@import './component/notify.css';
+@import './component/confirm.css';
 @import './layout/toolbar.css';
 #app {
     font-family: "Avenir", Helvetica, Arial, sans-serif;

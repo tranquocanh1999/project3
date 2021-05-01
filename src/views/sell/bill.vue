@@ -79,7 +79,7 @@
 import customers from "@/assets/json/customer.json";
 import products from "@/assets/json/product.json";
 import billProduct from "@/assets/json/bill-product.json";
-import VueGrid from "../components/grid/VueGrid.vue";
+import VueGrid from "../../components/grid/VueGrid.vue";
 export default {
   components: { VueGrid },
   data() {
@@ -130,7 +130,7 @@ export default {
           this.bill.billProducts[index].quantityBuy + 1;
         this.bill.details.amount =
           this.bill.details.amount + this.bill.billProducts[index].priceOut;
-      } else alert("lỗi");
+      } else alert("ERROR: trong kho chỉ còn "+e.quantity+" sản phẩm");
       this.billSearchVisible = !this.billSearchVisible;
     },
     onSelectCustomer(e) {

@@ -5,10 +5,10 @@ import auth from "./auth";
 
 import Home from "./views/home";
 import Profile from "./views/profile";
-import Bill from "./views/bill.vue";
-import BillList from "./views/billList.vue";
-import ProductList from "./views/productList.vue"
-import EmployeeList from "./views/employeeList.vue"
+import Bill from "./views/sell/bill.vue";
+import BillList from "./views/sell/billList.vue";
+import ProductList from "./views/inventory-management/products/productList.vue"
+import EmployeeList from "./views/admin/employeeList.vue"
 import defaultLayout from "./layouts/side-nav-inner-toolbar";
 import simpleLayout from "./layouts/single-card";
 

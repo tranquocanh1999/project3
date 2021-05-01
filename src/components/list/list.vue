@@ -20,7 +20,7 @@
           marginLeft: '-15px',
         }"
         text="Xóa"
-        @onClick="onMutilDelete"
+        @onClick="onDeleteClicked()"
       ></vue-button>
     </div>
     <div class="w-full list-header" v-if="!deleteMode">
@@ -30,7 +30,7 @@
         v-for="(item, index) in headerSelecBox"
         :key="index"
       >
-        {{item.title}}:
+        {{ item.title }}:
         <div class="center-text">
           <DxSelectBox
             :items="item.data"
@@ -76,9 +76,9 @@
     <div class="list-content">
       <div class="list-grid" :class="[isFilter ? 'w-filter' : 'w-full']">
         <vue-grid
-          :header="data.header"
+          :header="header"
           :totalElements="totalElements"
-          :data="data.data"
+          :data="data"
           @onSelectionChanged="onSelectionRows"
           selectionMode
           :deleteMode="deleteMode"
@@ -86,31 +86,39 @@
         ></vue-grid>
       </div>
       <div class="list-filter" v-if="isFilter">
-        <vue-filter
-          :data="data.header"
-          @onCloseFilter="onHandleFilter"
-        ></vue-filter>
+        <vue-filter :data="header" @onCloseFilter="onHandleFilter"></vue-filter>
       </div>
     </div>
+    <confirm
+      :popupVisible.sync="confirmVisible"
+      :option="confirmOption"
+    ></confirm>
   </div>
 </template>
 
 <script>
+import { event } from "@/js/event.js";
+import confirmOption from "@/js/confirm.js";
+import notify from "devextreme/ui/notify";
 export default {
   name: "vue-list",
   props: {
-   
     totalElements: {
       type: String,
       default: "0",
+    },
+    header: {
+      type: [Array, Object],
+      default: null,
     },
     data: {
       type: [Array, Object],
       default: null,
     },
-    placeholder:{
+
+    placeholder: {
       type: String,
-      default: ""
+      default: "",
     },
 
     add: {
@@ -121,7 +129,7 @@ export default {
       type: Array,
       default: null,
     },
-  
+
     title: {
       type: String,
       default: "",
@@ -133,7 +141,8 @@ export default {
       isFilter: false,
       deleteMode: false,
       itemsSelected: [],
-     
+      confirmOption: {},
+      confirmVisible: false,
     };
   },
   methods: {
@@ -144,10 +153,38 @@ export default {
       else this.deleteMode = true;
     },
     closeDeleteMode() {
-      this.deleteMode = false;
+    
+         
+          this.deleteMode = false;
+       
     },
     onHandleFilter() {
       this.isFilter = !this.isFilter;
+    },
+    onDeleteClicked() {
+      if (this.itemsSelected.length === 1) {
+        this.delete();
+      } else {
+        this.mutilDelete();
+      }
+    },
+    delete() {
+      this.confirmOption = { ...confirmOption.deleteConfirm() };
+      this.confirmVisible = true;
+      event.once("confirm-event", (data) => {
+        if (data === true) {
+          notify("Xóa thành công", "success", 1000);
+        }
+      });
+    },
+    mutilDelete() {
+      this.confirmOption = { ...confirmOption.deletesConfirm() };
+      this.confirmVisible = true;
+      event.once("confirm-event", (data) => {
+        if (data === true) {
+          notify("Xóa thành công", "success", 1000);
+        }
+      });
     },
   },
 };
