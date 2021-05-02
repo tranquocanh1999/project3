@@ -31,17 +31,24 @@
         :key="index"
       >
         {{ item.title }}:
-        <div class="center-text">
+        <div class="center-text w-150 ml-10 mr-10">
           <DxSelectBox
             :items="item.data"
-            v-model="item.statusValue"
+            v-model="item.value"
             placeholder=""
             display-expr="name"
             value-expr="id"
+            @value-changed="onHandleSelection(item)"
           />
         </div>
       </div>
-      <DxTextBox :placeholder="placeholder"></DxTextBox>
+      <div style="width:300px">
+        <DxTextBox
+          :placeholder="placeholder"
+          @value-changed="onFilter()"
+          :value.sync="payload.param"
+        ></DxTextBox>
+      </div>
       <div class="list-header-right">
         <vue-button
           class="vue-button-primary"
@@ -68,7 +75,7 @@
           :buttonStyle="{
             marginTop: ' 4px',
           }"
-          @onClick="onHandleFilter"
+          @onClick="onHandleFilter()"
         ></vue-button>
       </div>
     </div>
@@ -80,13 +87,19 @@
           :totalElements="totalElements"
           :data="data"
           @onSelectionChanged="onSelectionRows"
+          @onChangePageSize="onChangePageSize"
           selectionMode
           :deleteMode="deleteMode"
           paging
         ></vue-grid>
       </div>
       <div class="list-filter" v-if="isFilter">
-        <vue-filter :data="header" @onCloseFilter="onHandleFilter"></vue-filter>
+        <vue-filter
+          :data="header"
+          @onCloseFilter="onHandleFilter()"
+          :payload.sync="payload.advancedFilter"
+          @onSubmit="onFilter()"
+        ></vue-filter>
       </div>
     </div>
     <confirm
@@ -143,6 +156,11 @@ export default {
       itemsSelected: [],
       confirmOption: {},
       confirmVisible: false,
+      payload: {
+        numberElementsOfPage: 25,
+        param: "",
+        advancedFilter: {},
+      },
     };
   },
   methods: {
@@ -153,38 +171,50 @@ export default {
       else this.deleteMode = true;
     },
     closeDeleteMode() {
-    
-         
-          this.deleteMode = false;
-       
+      this.deleteMode = false;
     },
     onHandleFilter() {
       this.isFilter = !this.isFilter;
     },
     onDeleteClicked() {
       if (this.itemsSelected.length === 1) {
-        this.delete();
+        this.delete(this.itemsSelected[0]);
       } else {
-        this.mutilDelete();
+        this.mutilDelete(this.itemsSelected);
       }
     },
-    delete() {
+    delete(id) {
       this.confirmOption = { ...confirmOption.deleteConfirm() };
       this.confirmVisible = true;
       event.once("confirm-event", (data) => {
         if (data === true) {
+          console.log(id);
           notify("Xóa thành công", "success", 1000);
         }
       });
     },
-    mutilDelete() {
+    mutilDelete(ids) {
       this.confirmOption = { ...confirmOption.deletesConfirm() };
       this.confirmVisible = true;
       event.once("confirm-event", (data) => {
         if (data === true) {
+          console.log(ids);
           notify("Xóa thành công", "success", 1000);
         }
       });
+    },
+    onChangePageSize(numberElementsOfPage) {
+      this.payload.numberElementsOfPage = numberElementsOfPage;
+      this.onFilter();
+    },
+
+    onFilter() {
+      console.log(this.payload);
+      this.$emit("onFilter", this.payload);
+    },
+    onHandleSelection(item) {
+      this.payload[item.class] = item.value;
+      this.onFilter();
     },
   },
 };

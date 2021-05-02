@@ -15,3 +15,7 @@
     font-weight: normal;
     padding: 0 40px !important;
 }
+.list-header .list-header-selectbox .dx-texteditor-container{
+    margin-right: 0!important;
+    width:100%!important;
+}

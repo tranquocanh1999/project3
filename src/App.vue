@@ -65,6 +65,7 @@ export default {
 
 <style lang="scss">
 @import "./assets/styles/root.css";
+@import "./assets/scss/root.scss";
 html,
 body {
   margin: 0px;

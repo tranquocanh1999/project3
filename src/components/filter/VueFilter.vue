@@ -5,18 +5,18 @@
       <div class="icon-cancel" @click="onHandleClick"></div>
     </div>
 
-   <dxTextBox :value.sync="searchParam"></dxTextBox>
+    <dxTextBox :value.sync="searchParam"></dxTextBox>
 
     <div class="filter-content">
       <vue-filter-item
         v-for="item in data"
         :item="item"
-        :key="item.id"     
-         v-show="
+        :key="item.id"
+        v-show="
           item.name.toLowerCase().includes(searchParam.toLowerCase()) ||
-          removeAccents(item.name.toLowerCase()).includes(
-            searchParam.toLowerCase()
-          )
+            removeAccents(item.name.toLowerCase()).includes(
+              searchParam.toLowerCase()
+            )
         "
         :payload.sync="payload"
       ></vue-filter-item>
@@ -31,26 +31,29 @@
         }"
         @onClick="onHandleClick"
       ></vue-button>
-     
-      <vue-button class="vue-button-primary" @onClick="onSubmit" text="Áp dụng"></vue-button>
+
+      <vue-button
+        class="vue-button-primary"
+        @onClick="onSubmit"
+        text="Áp dụng"
+      ></vue-button>
     </div>
   </div>
 </template>
 
 <script>
+
 export default {
   name: "vue-filter",
   props: {
-  
     data: {
-      type: [Object,Array],
+      type: [Object, Array],
       default: null,
     },
-     payload: {
+    payload: {
       type: Object,
       default: null,
     },
-
   },
   data() {
     return { searchParam: "" };
@@ -59,12 +62,11 @@ export default {
     onHandleClick() {
       this.$emit("onCloseFilter");
     },
-    onSubmit(){
- this.payload
-       this.$emit("onSubmit", this.payload);
-    }
-    ,
-     removeAccents(str) {
+    onSubmit() {
+      this.payload;
+      this.$emit("onSubmit", this.payload);
+    },
+    removeAccents(str) {
       var AccentsMap = [
         "aàảãáạăằẳẵắặâầẩẫấậ",
         "AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬ",

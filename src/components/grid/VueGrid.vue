@@ -11,6 +11,7 @@
       key-expr="id"
       :hoverStateEnabled="true"
     >
+      <DxLoadPanel :enabled="true" />
       <DxPaging :enabled="false"></DxPaging>
 
       <DxSelection
@@ -126,7 +127,7 @@ export default {
       this.$emit("onSelectionChanged", e.selectedRowKeys);
     },
     onChangePageSize() {
-      alert(this.numberElementsOfPage);
+      this.$emit("onChangePageSize", this.numberElementsOfPage);
     },
     prevClick() {},
     nextClick() {},

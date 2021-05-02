@@ -6,6 +6,7 @@
     title="Danh Sách Sản Phẩm"
     :headerSelecBox="headerSelecBox"
     placeholder="Tìm kiếm theo tên hoặc mã sản phẩm"
+    @onFilter="onHandleFilter()"
     add
   ></vue-list>
 </template>
@@ -13,30 +14,33 @@
 <script>
 import status from "@/assets/json/status.json";
 import product from "@/assets/json/product.json";
-import productAPI from "@/api/components/Product/ProductAPI.js"
+import productAPI from "@/api/components/Product/ProductAPI.js";
 export default {
   data() {
     return {
       status,
       product,
-      listData:[],
+      listData: [],
       headerSelecBox: [
         {
+          class: "status",
           title: "Trạng thái",
           data: status.product,
+          value: 0,
         },
-        
       ],
     };
   },
-    methods: {
+  methods: {
+    async onHandleFilter() {
+      const response = await productAPI.getById(1);
+      this.listData= response.data;
+    },
     // lấy dữ liệu từ serve
     async getAll() {
-      console.log(this.payload);
-
       const response = await productAPI.getAll();
 
-      this.listData = response.data.data;
+      this.listData = response.data;
     },
   },
   async created() {

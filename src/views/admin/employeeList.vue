@@ -21,14 +21,16 @@ export default {
       listData: [],
       headerSelecBox: [
         {
+          class: "status",
           title: "Trạng thái",
           data: status.employee,
-          statusValue: 0,
+          value: 0,
         },
         {
+          class: "position",
           title: "Vị trí",
           data: status.employeePosition,
-          statusValue: 0,
+          value: 0,
         },
       ],
     };
@@ -40,7 +42,7 @@ export default {
 
       const response = await employeeAPI.getAll();
 
-      this.listData = response.data.data;
+      this.listData = response.data;
     },
   },
   async created() {

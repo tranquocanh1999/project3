@@ -3,6 +3,7 @@
     class="filter-item "
     style="margin:0 10px 10px 10px"
     :class="{ active: selected }"
+    v-if="item.isFilter"
   >
     <DxCheckBox
       :text="item.name"
@@ -10,21 +11,83 @@
       :onValueChanged="onChange"
     ></DxCheckBox>
     <div class="filter-box" v-if="selected">
-      <div style="margin:10px ">
+      <div class="m-10">
         <DxSelectBox
           :items="type"
           v-model="typeValue"
           placeholder=""
           :onValueChanged="onChange"
+          display-expr="name"
+          value-expr="id"
         />
       </div>
-    
-      <div style="margin:10px ">
+
+      <div class="m-10">
         <DxTextBox
           :show-clear-button="true"
           :value.sync="params"
-          v-if="checkType()"
           :onValueChanged="onChange"
+          v-if="item.type === 'text' && typeValue > 9"
+        />
+      </div>
+      <div class="mx-10" v-if="item.type === 'number' && typeValue > 19">
+        Từ
+      </div>
+      <div class="m-10">
+        <DxNumberBox
+          :show-clear-button="true"
+          :value.sync="params"
+          :max="params1"
+          :onValueChanged="onChange"
+          v-if="item.type === 'number' && typeValue > 9"
+        />
+      </div>
+      <div class="mx-10" v-if="item.type === 'number' && typeValue > 19">
+        Đến
+      </div>
+      <div class="m-10">
+        <DxNumberBox
+          :show-clear-button="true"
+          :value.sync="params1"
+          :min="params"
+          :onValueChanged="onChange"
+          v-if="item.type === 'number' && typeValue > 19"
+        />
+      </div>
+      <div class="mx-10" v-if="item.type === 'date' && typeValue > 19">
+        Từ ngày:
+      </div>
+      <div class="m-10">
+        <DxDateBox
+          :use-mask-behavior="true"
+          :show-clear-button="true"
+          :value.sync="params"
+          :onValueChanged="onChange"
+          v-if="item.type === 'date' && typeValue > 9 && typeValue < 20"
+          type="date"
+        />
+        <DxDateBox
+          :use-mask-behavior="true"
+          :show-clear-button="true"
+          :value.sync="params"
+          :max="params1"
+          :onValueChanged="onChange"
+          v-if="item.type === 'date' && typeValue > 19"
+          type="date"
+        />
+      </div>
+      <div class="mx-10" v-if="item.type === 'date' && typeValue > 19">
+        Đến Ngày:
+      </div>
+      <div class="m-10">
+        <DxDateBox
+          :use-mask-behavior="true"
+          type="date"
+          :show-clear-button="true"
+          :value.sync="params1"
+          :min="params"
+          :onValueChanged="onChange"
+          v-if="item.type === 'date' && typeValue > 19"
         />
       </div>
     </div>
@@ -32,6 +95,7 @@
 </template>
 
 <script>
+import filter from "@/assets/json/filter.json";
 export default {
   name: "vue-filter-item",
   props: {
@@ -46,11 +110,13 @@ export default {
   },
   data() {
     return {
-      type: ["Bằng", "Khác", "Trống", "Không trống"],
       typeValue: "",
       selected: false,
       params: "",
+      params1: "",
       test: {},
+      filter,
+      type: [],
     };
   },
   methods: {
@@ -62,13 +128,24 @@ export default {
     },
 
     onChange() {
-      this.payload[this.item.class] = {
-        isFilter: this.selected,
-        type: this.typeValue,
-        params: this.params,
-      };
-   this.$emit("update:payload", this.payload);
+      if (this.selected && this.typeValue !== "") {
+        this.payload[this.item.class] = {
+          isFilter: true,
+          type: this.typeValue,
+          params: this.params,
+          params1: this.params1,
+        };
+      } else {
+        delete this.payload[this.item.class];
+      }
+      this.$emit("update:payload", this.payload);
     },
+  },
+  created() {
+    if (this.item.type === "date") this.type = this.filter.date;
+    else if (this.item.type === "number") this.type = this.filter.number;
+    else if (this.item.type === "text") this.type = this.filter.text;
+    else if (this.item.type === "gender") this.type = this.filter.gender;
   },
 };
 </script>

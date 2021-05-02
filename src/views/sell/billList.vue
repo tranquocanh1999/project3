@@ -25,7 +25,7 @@ export default {
       console.log(this.payload);
       const response = await receiptSaleAPI.getAll();
 
-      this.listData = response.data.data;
+      this.listData = response.data;
     },
   },
   async created() {
