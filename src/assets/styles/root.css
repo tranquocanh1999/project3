@@ -3,6 +3,7 @@
 @import './component/filter.css';
 @import './component/grid.css';
 @import './component/notify.css';
+@import './component/image-input.css';
 @import './component/confirm.css';
 @import './layout/toolbar.css';
 #app {

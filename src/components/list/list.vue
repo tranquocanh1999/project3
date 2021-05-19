@@ -1,12 +1,10 @@
 <template>
-  <div class="list w-full ">
+  <div class="list w-full">
     <div class="w-full list-header" v-if="deleteMode">
       <div class="selected">
         Đã chọn <b>{{ itemsSelected.length }}</b>
       </div>
-      <div class="unselected" @click="closeDeleteMode">
-        Bỏ chọn
-      </div>
+      <div class="unselected" @click="closeDeleteMode">Bỏ chọn</div>
       <vue-button
         class="ms-button-danger"
         :iconStyle="{
@@ -42,7 +40,7 @@
           />
         </div>
       </div>
-      <div style="width:300px">
+      <div style="width: 300px">
         <DxTextBox
           :placeholder="placeholder"
           @value-changed="onFilter()"
@@ -63,6 +61,7 @@
             marginTop: ' 4px',
           }"
           text="Thêm"
+          @onClick="onCreateClicked()"
           v-if="add"
         ></vue-button>
         <vue-button
@@ -102,10 +101,7 @@
         ></vue-filter>
       </div>
     </div>
-    <confirm
-      :popupVisible.sync="confirmVisible"
-      :option="confirmOption"
-    ></confirm>
+    <confirm :popupVisible.sync="confirmVisible" :option="confirmOption"></confirm>
   </div>
 </template>
 
@@ -182,6 +178,9 @@ export default {
       } else {
         this.mutilDelete(this.itemsSelected);
       }
+    },
+    onCreateClicked() {
+      this.$emit("createClicked");
     },
     delete(id) {
       this.confirmOption = { ...confirmOption.deleteConfirm() };

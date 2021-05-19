@@ -6,8 +6,15 @@
       :show-title="true"
       :width="500"
       :height="200"
-      :title="option.title === '' ? 'Thông báo' : option.title"
+      :showCloseButton="false"
     >
+      <DxToolbarItem
+        :text="option.title === '' ? 'Thông báo' : option.title"
+        location="before"
+      >
+      </DxToolbarItem>
+      <DxToolbarItem widget="dxButton" :options="closeButton" location="after">
+      </DxToolbarItem>
       <div class="popup-text">
         {{ option.text }}
       </div>
@@ -31,9 +38,7 @@
         <button
           type="button"
           class="btn vue-button-secondary"
-          style="
-            margin-left: 15px;
-          "
+          style="margin-left: 15px"
           @click="onCancelClicked()"
         >
           {{ option.buttonCancel === "cancel" ? "Hủy" : "Thoát" }}
@@ -58,16 +63,23 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      closeButton: {
+        type: "close",
+        icon: "close",
+        onClick: () => {
+          this.onCancelClicked();
+        },
+      },
+    };
   },
   methods: {
     onCancelClicked() {
-     
       this.$emit("update:popupVisible", false);
       event.emit("confirm-event");
     },
     onConfirmClicked() {
-      event.emit("confirm-event",true);
+      event.emit("confirm-event", true);
       this.$emit("update:popupVisible", false);
     },
   },

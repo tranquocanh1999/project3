@@ -1,13 +1,17 @@
 <template>
-  <vue-list
-    :data="listData"
-    :header="employee.header"
-    totalElements="3"
-    title="Danh Sách Nhân Viên"
-    placeholder="Tìm kiếm theo tên hoặc mã nhân viên"
-    :headerSelecBox="headerSelecBox"
-    add
-  ></vue-list>
+  <div>
+    <vue-list
+      :data="listData"
+      :header="employee.header"
+      totalElements="3"
+      @createClicked="onCreateClicked()"
+      placeholder="Tìm kiếm theo tên hoặc mã nhân viên"
+      title="Danh Sách Nhân Viên"
+      :headerSelecBox="headerSelecBox"
+      add
+    ></vue-list>
+    <employee-detail :popupVisible.sync="detailVisible"></employee-detail>
+  </div>
 </template>
 
 <script>
@@ -19,6 +23,7 @@ export default {
     return {
       employee,
       listData: [],
+      detailVisible: false,
       headerSelecBox: [
         {
           class: "status",
@@ -43,6 +48,9 @@ export default {
       const response = await employeeAPI.getAll();
 
       this.listData = response.data;
+    },
+    onCreateClicked() {
+      this.detailVisible = true;
     },
   },
   async created() {

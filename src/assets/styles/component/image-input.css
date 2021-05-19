@@ -1,0 +1,11 @@
+.image-input input {
+    display: none;
+}
+
+.image-input .imagePreviewWrapper{
+    width: 150px;
+    height: 150px;
+    background-repeat:no-repeat ;
+    background-size: contain;
+    border-radius: 50%;
+}

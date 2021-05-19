@@ -1,6 +1,5 @@
 import Vue from 'vue'
 
-
 import VueButton from '@/components/button/VueButton.vue';
 Vue.component(VueButton.name, VueButton)
 
@@ -17,3 +16,10 @@ Vue.component(VueFilterItem.name, VueFilterItem)
 
 import ConfirmPopup from '@/components/confirm/confirm-popup.vue';
 Vue.component(ConfirmPopup.name, ConfirmPopup)
+
+import EmployeeDetail from '@/views/admin/employeeDetail';
+Vue.component(EmployeeDetail.name, EmployeeDetail)
+
+
+import ImageInput from '@/components/image-input/image-input';
+Vue.component(ImageInput.name, ImageInput)
