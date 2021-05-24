@@ -14,12 +14,33 @@
     </DxToolbarItem>
     <DxToolbarItem widget="dxButton" :options="closeButton" location="after">
     </DxToolbarItem>
-    <div class="popup-text">
-      <div class="image">
-        <image-input></image-input>
+    <div class="h-100 d-flex flex-column">
+      <div class="popup-text d-flex px-100">
+        <div class="image ">
+          <image-input></image-input>
+        </div>
+        <div class="infor">
+        <div class="text-bold text-large ml-50">A.Thông tin chung</div>
+        </div>
       </div>
+      <div class="popup-event d-flex mt-auto"> 
+        <button
+          type="button"
+          class="btn vue-button-secondary mr-20 ml-auto"
+          style="margin-left: 15px ;width:98px"
+         
+        >
+           Thoát 
+        </button>
+        <button
+          type="button"
+          class="btn vue-button-primary mr-20"
+     
+        >
+          {{!isUpdate ?"Thêm mới":"Chỉnh sửa"}}
+        </button>
+        </div>
     </div>
-    <div class="popup-event"></div>
   </DxPopup>
 </template>
 

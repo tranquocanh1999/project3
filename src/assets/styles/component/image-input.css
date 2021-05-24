@@ -2,10 +2,10 @@
     display: none;
 }
 
-.image-input .imagePreviewWrapper{
+.image-input .imagePreviewWrapper {
     width: 150px;
     height: 150px;
-    background-repeat:no-repeat ;
-    background-size: contain;
+    background-repeat: no-repeat;
+    background-size: cover;
     border-radius: 50%;
 }

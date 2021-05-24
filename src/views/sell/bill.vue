@@ -28,11 +28,50 @@
         </DxPopover>
       </div>
       <div class="bill-content">
-        <vue-grid
-          :header="billProductHeader"
-          :data="bill.billProducts"
-          
-        ></vue-grid>
+        <DxDataGrid
+          id="gridContainer"
+          noDataText="Không có dữ liệu"
+          :data-source="bill.billProducts"
+          :show-borders="true"
+          :allow-column-reordering="true"
+          ref="dataGrid"
+          key-expr="id"
+          :hoverStateEnabled="true"
+        >
+          <DxLoadPanel :enabled="true" />
+
+          <DxColumn
+            width="200"
+            data-field="productCode"
+            caption="Mã Sản Phẩm"
+          />
+          <DxColumn
+            width="200"
+            data-field="image"
+            cell-template="image"
+            caption="Hình ảnh"
+          />
+          <DxColumn width="300" data-field="name" caption="Tên Sản Phẩm" />
+          <DxColumn
+            width="200"
+            data-field="quantityBuy"
+            cell-template="quantityBuy"
+            caption="Số lượng"
+          />
+          <DxColumn width="250" data-field="priceOut" caption="Giá tiền" />
+          <template #quantityBuy="{ data }">
+            <DxNumberBox
+              :value.sync="data.value"
+              :min="1"
+              :max="data.data.quantity"
+              @valueChanged="onHandleQuantityBuy(data)"
+              :show-spin-buttons="true"
+            />
+          </template>
+          <template #image="{ data }">
+            <img class="bill-search-image" :src="data.value" />
+          </template>
+        </DxDataGrid>
       </div>
     </div>
     <div class="bill-pay">
@@ -61,15 +100,21 @@
             <div class="bill-customer-search-name">
               {{ customer.customerName }}
             </div>
-            <div class="bill-customer-search-phone">{{ customer.phoneNumber  }}</div>
+            <div class="bill-customer-search-phone">
+              {{ customer.phoneNumber }}
+            </div>
           </div>
         </DxPopover>
-        <div class="infor">Tên khách hàng : {{ bill.customer.customerName }}</div>
-        <div class="infor">Số điện thoại: {{ bill.customer.phoneNumber }}</div>
+        <div class="infor mt-20">
+          Tên khách hàng : {{ bill.customer.customerName }}
+        </div>
+        <div class="infor mt-20">
+          Số điện thoại: {{ bill.customer.phoneNumber }}
+        </div>
       </div>
       <div class="bill-pay-infor ">
         <h6>Thông tin hóa đơn</h6>
-        <div>Tổng tiền: {{bill.details.amount}}</div>
+        <div>Tổng tiền: {{ bill.details.amount }}</div>
       </div>
     </div>
   </div>
@@ -79,9 +124,8 @@
 import customers from "@/assets/json/customer.json";
 import products from "@/assets/json/product.json";
 import billProduct from "@/assets/json/bill-product.json";
-import VueGrid from "../../components/grid/VueGrid.vue";
+
 export default {
-  components: { VueGrid },
   data() {
     return {
       products,
@@ -115,7 +159,7 @@ export default {
     onSelectProduct(e) {
       var product = { ...e };
       product.quantityBuy = 1;
-    
+
       var index = this.bill.billProducts.findIndex(
         (element) => element.productCode == e.productCode
       );
@@ -130,8 +174,19 @@ export default {
           this.bill.billProducts[index].quantityBuy + 1;
         this.bill.details.amount =
           this.bill.details.amount + this.bill.billProducts[index].priceOut;
-      } else alert("ERROR: trong kho chỉ còn "+e.quantity+" sản phẩm");
+      } else alert("ERROR: trong kho chỉ còn " + e.quantity + " sản phẩm");
       this.billSearchVisible = !this.billSearchVisible;
+    },
+    onHandleQuantityBuy(data) {
+      this.bill.details.amount =
+        this.bill.details.amount -
+        this.bill.billProducts[data.rowIndex].priceOut *
+          this.bill.billProducts[data.rowIndex].quantityBuy;
+      this.bill.billProducts[data.rowIndex].quantityBuy = data.value;
+      this.bill.details.amount =
+        this.bill.details.amount +
+        this.bill.billProducts[data.rowIndex].priceOut *
+          this.bill.billProducts[data.rowIndex].quantityBuy;
     },
     onSelectCustomer(e) {
       this.bill.customer = { ...e };

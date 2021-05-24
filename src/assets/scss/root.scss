@@ -1,2 +1,108 @@
 @import "./common/sizing.scss";
-@import "./common/spacing.scss"
+@import "./common/spacing.scss";
+@import "./common/text.scss";
+.d-inline-block {
+    display: inline-block !important;
+}
+
+.d-block {
+    display: block !important;
+}
+
+.d-none {
+    display: none !important;
+}
+
+.text-decoration-none {
+    text-decoration: none !important;
+}
+
+.text-bold {
+    font-weight: 600;
+}
+
+.pointer {
+    cursor: pointer !important;
+}
+
+.position-relative {
+    position: relative !important;
+}
+
+.outline-none:focus {
+    outline: none;
+}
+
+.position-absolute {
+    position: absolute !important;
+}
+
+.d-flex {
+    display: flex !important;
+}
+
+.justify-content-between {
+    justify-content: space-between !important;
+}
+
+.justify-content-center {
+    justify-content: center !important;
+}
+
+.justify-content-end {
+    justify-content: flex-end !important;
+}
+
+.justify-content-start {
+    justify-content: flex-start !important;
+}
+
+.align-items-center {
+    align-items: center !important;
+}
+
+.flex-column {
+    flex-direction: column !important;
+}
+
+.flex-wrap {
+    flex-wrap: wrap !important;
+}
+
+.align-content-between {
+    align-content: space-between !important;
+}
+
+.align-self-center {
+    align-self: center;
+}
+
+.align-self-start {
+    align-self: flex-start;
+}
+
+.flex-grow-1 {
+    flex-grow: 1;
+}
+
+.border-top-none {
+    border-top: none !important;
+}
+
+.hidden-scrollbar {
+    overflow-y: auto;
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    /* Hide scrollbar for IE Firefox */
+    -ms-overflow-style: none;
+    /* IE */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.hidden-scroll-x {
+    @extend .hidden-scrollbar;
+    overflow-y: visible;
+}

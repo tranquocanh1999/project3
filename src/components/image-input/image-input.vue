@@ -5,7 +5,8 @@
       :style="{ 'background-image': `url(${previewImage})` }"
       @click="selectImage"
     ></div>
-    <input ref="fileInput" type="file" @input="pickFile" />
+    <input ref="fileInput" type="file" @input="pickFile" accept="image/*" />
+    <div class="mt-20" style="font-weight:500">Nhấp để đổi ảnh đại diện</div>
   </div>
 </template>
 <script>

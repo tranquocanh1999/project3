@@ -5,6 +5,7 @@
 @import './component/notify.css';
 @import './component/image-input.css';
 @import './component/confirm.css';
+@import './component/field.css';
 @import './layout/toolbar.css';
 #app {
     font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -109,4 +110,3 @@ a {
 .w-filter {
     width: 83%;
 }
-
