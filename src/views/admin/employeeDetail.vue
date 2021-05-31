@@ -14,37 +14,181 @@
     </DxToolbarItem>
     <DxToolbarItem widget="dxButton" :options="closeButton" location="after">
     </DxToolbarItem>
-    <div class="h-100 d-flex flex-column">
-      <div class="popup-text d-flex px-100">
+    <div class="h-100 d-flex flex-column p-0 ">
+      <div class="popup-text d-flex px-100 px-24">
         <div class="image ">
-          <image-input></image-input>
+          <image-input
+            :value.sync="employee.image"
+            :fileUpload.sync="fileImage"
+            :isChange.sync="imgChange"
+            text="Ảnh đại diện"
+          ></image-input>
         </div>
-        <div class="infor">
-        <div class="text-bold text-large ml-50">A.Thông tin chung</div>
+        <div
+          class="infor h-100 pl-50 ml-30 mb-30"
+          style="width: 800px;   overflow-y: auto;"
+        >
+          <div class="text-bold text-large">A.Thông tin chung</div>
+          <div class="d-flex ">
+            <div class="w-50 d-block">
+              <field
+                label="Mã nhân viên"
+                v-if="employee.employeeCode"
+                targetID="id"
+              >
+                <DxTextBox
+                  :value.sync="employee.employeeCode"
+                  :read-only="true"
+                />
+              </field>
+              <field
+                label="Số điện thoại"
+                :messageErr="errMsg.phoneNumber"
+                targetID="phoneNumber"
+                required
+              >
+                <DxTextBox :value.sync="employee.phoneNumber" />
+              </field>
+              <field
+                label="Giới tính"
+                :messageErr="errMsg.gender"
+                targetID="gender"
+                required
+              >
+                <DxSelectBox
+                  :items="gender"
+                  display-expr="name"
+                  value-expr="id"
+                  placeholder="Chọn giới tính"
+                  :value.sync="employee.gender"
+                />
+              </field>
+              <field
+                label="Số CMND/Thẻ căn cước"
+                :messageErr="errMsg.identityCardNumber"
+                targetID="identityCardNumber"
+                required
+              >
+                <DxTextBox :value.sync="employee.identityCardNumber" />
+              </field>
+              <field label="Nơi cấp">
+                <DxTextBox :value.sync="employee.issuePlace" />
+              </field>
+              <field v-if="!employee.id" label="Ngày sinh">
+                <DxDateBox :value.sync="employee.dateOfBirth" type="date" />
+              </field>
+            </div>
+            <div class="w-50 d-block ml-30">
+              <field
+                label="Tên nhân viên"
+                :messageErr="errMsg.fullName"
+                targetID="fullName"
+                required
+              >
+                <DxTextBox :value.sync="employee.fullName" />
+              </field>
+              <field
+                label="Email"
+                :messageErr="errMsg.email"
+                targetID="email"
+                required
+              >
+                <DxTextBox :value.sync="employee.email" />
+              </field>
+              <field label="Ngày cấp">
+                <DxDateBox
+                  display-format="dd/MM/yyyy"
+                  :value.sync="employee.issueDate"
+                  type="date"
+                />
+              </field>
+              <field label="Địa chỉ">
+                <DxTextBox :value.sync="employee.address" />
+              </field>
+              <field v-if="employee.id" label="Ngày sinh">
+                <DxDateBox
+                  display-format="dd/MM/yyyy"
+                  :value.sync="employee.dateOfBirth"
+                  type="date"
+                />
+              </field>
+            </div>
+          </div>
+          <div class="text-bold text-large mt-20">B.Thông công việc</div>
+          <div>
+            <div class="d-flex ">
+              <div class="w-50 d-block">
+                <field label="Vị trí">
+                  <DxSelectBox
+                    :items="position"
+                    display-expr="name"
+                    value-expr="id"
+                    :value.sync="employee.positionId"
+                  />
+                </field>
+                <field
+                  label="Mã số thuế cá nhân"
+                  :messageErr="errMsg.taxcode"
+                  targetID="taxcode"
+                  required
+                >
+                  <DxTextBox :value.sync="employee.taxcode" />
+                </field>
+                <field label="Ngày bắt đầu làm việc">
+                  <DxDateBox
+                    display-format="dd/MM/yyyy"
+                    :value.sync="employee.joinDate"
+                    type="date"
+                  />
+                </field>
+              </div>
+              <div class="w-50 d-block">
+                <field label="Lương cơ bản">
+                  <DxNumberBox
+                    :value.sync="employee.basicSalary"
+                    format="#,###"
+                    :min="0"
+                  />
+                </field>
+                <field label="Tình trạng làm việc">
+                  <DxSelectBox
+                    :items="status"
+                    display-expr="name"
+                    value-expr="id"
+                    :value.sync="employee.statusId"
+                  />
+                </field>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="popup-event d-flex mt-auto"> 
+      <div class="popup-event d-flex mt-auto pt-30  ">
         <button
           type="button"
           class="btn vue-button-secondary mr-20 ml-auto"
           style="margin-left: 15px ;width:98px"
-         
+          @click="onCancelClicked()"
         >
-           Thoát 
+          Thoát
         </button>
         <button
           type="button"
-          class="btn vue-button-primary mr-20"
-     
+          class="btn vue-button-primary mr-20 mr-100"
+          @click="onConfirmClicked()"
         >
-          {{!isUpdate ?"Thêm mới":"Chỉnh sửa"}}
+          {{ !isUpdate ? "Thêm mới" : "Chỉnh sửa" }}
         </button>
-        </div>
+      </div>
     </div>
   </DxPopup>
 </template>
 
 <script>
+import uploadImg from "@/js/uploadImg.js";
+import validator from "@/js/validator/employee.js";
+import status from "@/assets/json/status.json";
+import employeeAPI from "@/api/components/Employee/EmployeeAPI.js";
 export default {
   name: "employee-detail",
   props: {
@@ -52,13 +196,19 @@ export default {
       type: Boolean,
       default: false,
     },
-    isUpdate: {
-      type: Boolean,
-      default: false,
+
+    id: {
+      type: [String, Number],
+      default: 0,
     },
   },
   data() {
     return {
+      status: [],
+      position: [],
+      fileImage: null,
+      imgChange: false,
+      isUpdate: false,
       closeButton: {
         type: "close",
         icon: "close",
@@ -66,17 +216,95 @@ export default {
           this.onCancelClicked();
         },
       },
+      errMsg: {
+        fullName: "",
+        taxcode: "",
+        email: "",
+        identityCardNumber: "",
+        phoneNumber: "",
+        gender: "",
+      },
+      employee: {
+        dateOfBirth: "",
+        gender: "",
+        email: "",
+        employeeCode: "",
+        fullName: "",
+        positionId: 1,
+        statusId: 1,
+        address: "",
+        phoneNumber: "",
+        image:
+          "https://firebasestorage.googleapis.com/v0/b/project3-9450a.appspot.com/o/blank-profile-picture-973460_640.png?alt=media&token=9a1c847b-fc0c-4594-8c7f-54ac21115c37",
+        identityCardNumber: "",
+        issuePlace: "",
+        issueDate: "",
+        taxcode: "",
+        joinDate: new Date(),
+        basicSalary: 0,
+      },
+      gender: [
+        { id: "0", name: "Nam" },
+        { id: "1", name: "Nữ" },
+      ],
+
+      employeeDefault: {
+        dateOfBirth: "",
+        gender: "",
+        email: "",
+        employeeCode: "",
+        fullName: "",
+        positionId: 1,
+        statusId: 1,
+        address: "",
+        phoneNumber: "",
+        image: "",
+        identityCardNumber: "",
+        issuePlace: "",
+        issueDate: "",
+        taxcode: "",
+        joinDate: new Date(),
+        basicSalary: 0,
+      },
     };
   },
   methods: {
     onCancelClicked() {
       this.$emit("update:popupVisible", false);
+      this.$emit("success");
+      this.employee = { ...this.employeeDefault };
     },
-    onConfirmClicked() {
-      this.$emit("update:popupVisible", false);
+
+    async onConfirmClicked() {
+      const validate = validator(this.employee);
+      this.errMsg = validate.errMsg;
+      if (validate.isValid) {
+        if (this.imgChange) {
+          this.employee.image = await uploadImg(this.fileImage);
+          console.log(this.employee.image);
+        }
+        if (this.isUpdate) {
+          await employeeAPI.update(this.employee.id, this.employee);
+        } else {
+          this.employee.id = 10;
+          await employeeAPI.insert(this.employee);
+        }
+
+        this.onCancelClicked();
+      }
     },
+  },
+  async created() {
+    this.status = status.employee.slice(1, 4);
+    this.isUpdate = false;
+    this.position = status.employeePosition.slice(1, 3);
+    if (this.id != 0) {
+      const response = await employeeAPI.getById(this.id);
+      this.employee = response.data;
+      this.isUpdate = true;
+    }
   },
 };
 </script>
 
-<style></style>
+<style scoped></style>

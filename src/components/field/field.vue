@@ -1,5 +1,5 @@
 <template>
-  <div class="dx-field">
+  <div class="dx-field d-block mt-10">
     <div class="dx-field-label">
       {{ label }} <span v-if="required" style="color:red">*</span>
     </div>
@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  name: "ms-field",
+  name: "field",
   props: {
     label: {
       type: String,
@@ -64,4 +64,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.dx-field-value-static,
+.dx-field-value:not(.dx-switch):not(.dx-checkbox):not(.dx-button) {
+  width: 90%;
+}</style
+>>

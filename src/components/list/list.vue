@@ -20,6 +20,21 @@
         text="Xóa"
         @onClick="onDeleteClicked()"
       ></vue-button>
+      <vue-button
+        v-if="itemsSelected.length === 1"
+        class="ms-button-primary ml-10"
+        :iconStyle="{
+          width: '16px',
+          height: '16px',
+          maskPosition: '-292px -26px',
+          backgroundColor: 'white',
+        }"
+        :buttonStyle="{
+          marginRight: '5px',
+          marginLeft: '-15px',
+        }"
+        @onClick="onUpdateClicked()"
+      ></vue-button>
     </div>
     <div class="w-full list-header" v-if="!deleteMode">
       <div class="list-header-title">{{ title }}</div>
@@ -70,6 +85,7 @@
             width: '16px',
             height: '18px',
             maskPosition: '-244px -51px',
+            backgroundColor: 'white',
           }"
           :buttonStyle="{
             marginTop: ' 4px',
@@ -88,7 +104,9 @@
           @onSelectionChanged="onSelectionRows"
           @onChangePageSize="onChangePageSize"
           selectionMode
+          :selecBox="selectBox"
           :deleteMode="deleteMode"
+          :name="name"
           paging
         ></vue-grid>
       </div>
@@ -101,7 +119,10 @@
         ></vue-filter>
       </div>
     </div>
-    <confirm :popupVisible.sync="confirmVisible" :option="confirmOption"></confirm>
+    <confirm
+      :popupVisible.sync="confirmVisible"
+      :option="confirmOption"
+    ></confirm>
   </div>
 </template>
 
@@ -112,6 +133,10 @@ import notify from "devextreme/ui/notify";
 export default {
   name: "vue-list",
   props: {
+    name: {
+      type: String,
+      default: "",
+    },
     totalElements: {
       type: String,
       default: "0",
@@ -179,6 +204,9 @@ export default {
         this.mutilDelete(this.itemsSelected);
       }
     },
+    onUpdateClicked() {
+      this.$emit("updateClicked", this.itemsSelected[0]);
+    },
     onCreateClicked() {
       this.$emit("createClicked");
     },
@@ -187,8 +215,7 @@ export default {
       this.confirmVisible = true;
       event.once("confirm-event", (data) => {
         if (data === true) {
-          console.log(id);
-          notify("Xóa thành công", "success", 1000);
+          this.$emit("deleteClicked", id);
         }
       });
     },

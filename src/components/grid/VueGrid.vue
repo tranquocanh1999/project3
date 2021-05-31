@@ -25,11 +25,21 @@
         :key="item.id"
         :width="item.width"
         :data-field="item.class"
-        :cell-template="item.class === 'image' ? 'image' : ''"
+        :cell-template="getTemplate(item)"
         :caption="item.name"
+        data-type="text"
       />
       <template #image="{ data }">
         <img class="bill-search-image" :src="data.value" />
+      </template>
+      <template #gender="{ data }">
+        <div>{{ data.value == 1 ? "Nữ" : "Nam" }}</div>
+      </template>
+      <template #date="{ data }">
+        <div>{{ data.value | date }}</div>
+      </template>
+      <template #selectBox="{ data }">
+        <div>{{ onHandleSelecBox(data) }}</div>
       </template>
     </DxDataGrid>
     <div class="paging w-full" v-if="paging">
@@ -83,9 +93,15 @@
 </template>
 
 <script>
+import Vue from "vue";
+
 export default {
   name: "vue-grid",
   props: {
+    name: {
+      type: String,
+      default: "",
+    },
     data: {
       type: Array,
       default: null,
@@ -93,6 +109,10 @@ export default {
     selectionMode: {
       type: Boolean,
       default: false,
+    },
+    selecBox: {
+      type: Object,
+      default: null,
     },
     header: {
       type: Array,
@@ -129,8 +149,28 @@ export default {
     onChangePageSize() {
       this.$emit("onChangePageSize", this.numberElementsOfPage);
     },
+    onHandleSelecBox(value) {
+      if (this.name === "employee") {
+        if (value.column.name === "position")
+          return Vue.filter("employeePosition")(value.value);
+        if (value.column.name === "status")
+          return Vue.filter("employeeStatus")(value.value);
+      }
+      if (this.name === "product") {
+        if (value.column.name === "category")
+          return Vue.filter("productCategory")(value.value);
+      }
+    },
+
     prevClick() {},
     nextClick() {},
+    getTemplate(data) {
+      if (data.class === "image") return "image";
+      if (data.class === "gender") return "gender";
+      if (data.type === "date") return "date";
+      if (data.type === "selectBox") return "selectBox";
+      return "";
+    },
   },
   watch: {
     deleteMode: function(newVal, oldVal) {

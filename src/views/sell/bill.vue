@@ -15,15 +15,16 @@
           target="#bill-search"
           position="top"
           :onHide="toggleBillSearch"
+          v-if="products"
         >
           <div
             @click="onSelectProduct(product)"
-            v-for="(product, index) in products.data"
+            v-for="(product, index) in products"
             :key="index"
             class="bill-search-list"
           >
             <img class="bill-search-image" :src="product.image" />
-            <div class="bill-search-name">{{ product.name }}</div>
+            <div class="bill-search-name">{{ product.productName }}</div>
           </div>
         </DxPopover>
       </div>
@@ -51,7 +52,11 @@
             cell-template="image"
             caption="Hình ảnh"
           />
-          <DxColumn width="300" data-field="name" caption="Tên Sản Phẩm" />
+          <DxColumn
+            width="300"
+            data-field="productName"
+            caption="Tên Sản Phẩm"
+          />
           <DxColumn
             width="200"
             data-field="quantityBuy"
@@ -122,13 +127,13 @@
 
 <script>
 import customers from "@/assets/json/customer.json";
-import products from "@/assets/json/product.json";
 import billProduct from "@/assets/json/bill-product.json";
+import productAPI from "@/api/components/Product/ProductAPI.js";
 
 export default {
   data() {
     return {
-      products,
+      products: null,
       customers,
       billProductHeader: billProduct.header,
 
@@ -150,6 +155,11 @@ export default {
     };
   },
   methods: {
+    // lấy dữ liệu từ serve
+    async getAll() {
+      const response = await productAPI.getAll();
+      this.products = response.data;
+    },
     toggleBillSearch() {
       this.billSearchVisible = !this.billSearchVisible;
     },
@@ -192,6 +202,10 @@ export default {
       this.bill.customer = { ...e };
       this.billCustomerSearchVisible = !this.billCustomerSearchVisible;
     },
+  },
+  async created() {
+    this.products = null;
+    await this.getAll();
   },
 };
 </script>

@@ -5,7 +5,6 @@
     totalElements="3"
     title="Danh Sách Đơn Hàng Bán"
     placeholder="Tìm kiếm theo tên hoặc mã đơn hàng "
-    add
   ></vue-list>
 </template>
 

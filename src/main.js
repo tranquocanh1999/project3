@@ -8,6 +8,8 @@ import router from "./router";
 import appInfo from "./app-info";
 import './global-components/DevExtremeComponents';
 import './global-components/VueComponents.js';
+import './js/filter';
+import './js/firebase';
 
 Vue.config.productionTip = false;
 Vue.prototype.$appInfo = appInfo;

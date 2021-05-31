@@ -5,16 +5,26 @@
       :header="employee.header"
       totalElements="3"
       @createClicked="onCreateClicked()"
+      @deleteClicked="onDeleteClicked($event)"
+      @updateClicked="onCreateClicked($event)"
       placeholder="Tìm kiếm theo tên hoặc mã nhân viên"
       title="Danh Sách Nhân Viên"
+      name="employee"
       :headerSelecBox="headerSelecBox"
+      :selecBox="selecBox"
       add
     ></vue-list>
-    <employee-detail :popupVisible.sync="detailVisible"></employee-detail>
+    <employee-detail
+      v-if="detailVisible"
+      @success="onHandleCreateSuccess()"
+      :id="updateId"
+      :popupVisible.sync="detailVisible"
+    ></employee-detail>
   </div>
 </template>
 
 <script>
+import notify from "devextreme/ui/notify";
 import employee from "@/assets/json/employee.json";
 import status from "@/assets/json/status.json";
 import employeeAPI from "@/api/components/Employee/EmployeeAPI.js";
@@ -24,33 +34,43 @@ export default {
       employee,
       listData: [],
       detailVisible: false,
-      headerSelecBox: [
-        {
+      updateId: 0,
+      headerSelecBox: {
+        status: {
           class: "status",
           title: "Trạng thái",
           data: status.employee,
           value: 0,
         },
-        {
+        position: {
           class: "position",
           title: "Vị trí",
           data: status.employeePosition,
           value: 0,
         },
-      ],
+      },
     };
   },
   methods: {
     // lấy dữ liệu từ serve
     async getAll() {
-      console.log(this.payload);
-
       const response = await employeeAPI.getAll();
-
       this.listData = response.data;
     },
-    onCreateClicked() {
+    async onHandleCreateSuccess() {
+      await this.getAll();
+    },
+    onCreateClicked(id) {
+      this.updateId = 0;
+      if (id) {
+        this.updateId = id;
+      }
       this.detailVisible = true;
+    },
+    async onDeleteClicked(id) {
+      await employeeAPI.delete(id);
+      this.getAll();
+      notify("Xóa thành công", "success", 1000);
     },
   },
   async created() {

@@ -2,10 +2,28 @@
   <div>
     <h2 class="content-block">Home</h2>
     <div class="content-block">
-    Đây là trang chủ của cừa hàng
+      Đây là trang chủ của cừa hàng
+      <button @click="click">click</button>
+      <div v-if="url !== ''"><qr-code :text="url"></qr-code></div>
     </div>
   </div>
 </template>
+<script>
+import getUrl from "@/api/MomoAPI.js";
+export default {
+  data() {
+    return {
+      url: "",
+    };
+  },
+  methods: {
+    click() {
+      this.url = getUrl(1000, 1);
+      console.log(this.url);
+    },
+  },
+};
+</script>
 
 <style lang="scss">
 .logos-container {

@@ -2,19 +2,40 @@
   <div class="image-input">
     <div
       class="imagePreviewWrapper"
-      :style="{ 'background-image': `url(${previewImage})` }"
+      :style="{
+        'background-image': `url(${previewImage ? previewImage : value})`,
+      }"
       @click="selectImage"
     ></div>
     <input ref="fileInput" type="file" @input="pickFile" accept="image/*" />
-    <div class="mt-20" style="font-weight:500">Nhấp để đổi ảnh đại diện</div>
+    <div
+      class="mt-20 text-center d-flex justify-content-center "
+      style="font-weight:500"
+    >
+      {{ text }}
+    </div>
   </div>
 </template>
 <script>
 export default {
   name: "image-input",
+  props: {
+    value: {
+      type: String,
+      default: "",
+    },
+    text: {
+      type: String,
+      default: "",
+    },
+    fileUpload: {
+      type: File,
+      default: null,
+    },
+  },
   data() {
     return {
-      previewImage: require("@/assets/img/blank-profile-picture-973460_640.png"),
+      previewImage: "",
     };
   },
   methods: {
@@ -30,7 +51,8 @@ export default {
           this.previewImage = e.target.result;
         };
         reader.readAsDataURL(file[0]);
-        this.$emit("input", file[0]);
+        this.$emit("update:fileUpload", file[0]);
+        this.$emit("update:isChange", true);
       }
     },
   },

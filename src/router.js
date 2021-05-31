@@ -25,6 +25,15 @@ const router = new Router({
             }
         },
         {
+            path: "/success",
+            name: "home",
+            meta: { requiresAuth: true },
+            components: {
+                layout: defaultLayout,
+                content: Home
+            }
+        },
+        {
             path: "/profile",
             name: "profile",
             meta: { requiresAuth: true },
