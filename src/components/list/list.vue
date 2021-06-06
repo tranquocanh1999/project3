@@ -114,7 +114,7 @@
         <vue-filter
           :data="header"
           @onCloseFilter="onHandleFilter()"
-          :payload.sync="payload.advancedFilter"
+          :payload.sync="payload.filter"
           @onSubmit="onFilter()"
         ></vue-filter>
       </div>
@@ -178,9 +178,10 @@ export default {
       confirmOption: {},
       confirmVisible: false,
       payload: {
-        numberElementsOfPage: 25,
+        pageSize: 25,
+        offSet: 0,
         param: "",
-        advancedFilter: {},
+        filter: {},
       },
     };
   },
@@ -230,16 +231,37 @@ export default {
       });
     },
     onChangePageSize(numberElementsOfPage) {
-      this.payload.numberElementsOfPage = numberElementsOfPage;
+      this.payload.pageSize = numberElementsOfPage;
       this.onFilter();
     },
 
     onFilter() {
-      console.log(this.payload);
-      this.$emit("onFilter", this.payload);
+      var filter = [];
+
+      for (let prop in this.payload.filter) {
+        if (prop) {
+          filter.push({
+            ...this.payload.filter[prop],
+            name: prop,
+          });
+        }
+      }
+      const payload = { ...this.payload };
+      payload.filter = filter;
+      console.log(payload);
+      this.$emit("onFilter", payload);
     },
     onHandleSelection(item) {
-      this.payload[item.class] = item.value;
+      if (item.value == "0") {
+        delete this.payload.advancedFilter[item.class];
+        console.log(this.payload.advancedFilter[item.class]);
+      } else if (item.value != 0) {
+        this.payload.advancedFilter[item.class] = {
+          type: "10",
+          value1: item.value,
+        };
+      }
+
       this.onFilter();
     },
   },

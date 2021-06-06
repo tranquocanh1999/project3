@@ -7,6 +7,7 @@
       @createClicked="onCreateClicked()"
       @deleteClicked="onDeleteClicked($event)"
       @updateClicked="onCreateClicked($event)"
+      @onFilter="onFilter($event)"
       placeholder="Tìm kiếm theo tên hoặc mã nhân viên"
       title="Danh Sách Nhân Viên"
       name="employee"
@@ -28,6 +29,7 @@ import notify from "devextreme/ui/notify";
 import employee from "@/assets/json/employee.json";
 import status from "@/assets/json/status.json";
 import employeeAPI from "@/api/components/Employee/EmployeeAPI.js";
+
 export default {
   data() {
     return {
@@ -49,16 +51,27 @@ export default {
           value: 0,
         },
       },
+      payload: {
+        pageSize: 20,
+        offSet: 0,
+        param: "",
+        filter: [],
+      },
     };
   },
   methods: {
     // lấy dữ liệu từ serve
     async getAll() {
-      const response = await employeeAPI.getAll();
-      this.listData = response.data;
+      const response = await employeeAPI.paging(this.payload);
+
+      this.listData = response.data.data;
     },
     async onHandleCreateSuccess() {
       await this.getAll();
+    },
+    onFilter(payload) {
+      this.payload = { ...payload };
+      this.getAll();
     },
     onCreateClicked(id) {
       this.updateId = 0;

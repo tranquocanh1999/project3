@@ -9,7 +9,6 @@
   </div>
 </template>
 <script>
-import getUrl from "@/api/MomoAPI.js";
 export default {
   data() {
     return {
@@ -18,7 +17,6 @@ export default {
   },
   methods: {
     click() {
-      this.url = getUrl(1000, 1);
       console.log(this.url);
     },
   },

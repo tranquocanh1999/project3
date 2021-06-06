@@ -64,6 +64,8 @@
           :value.sync="params"
           :onValueChanged="onChange"
           v-if="item.type === 'date' && typeValue > 9 && typeValue < 20"
+          display-format="dd/MM/yy"
+          dateSerializationFormat="yyyy-MM-dd"
           type="date"
         />
         <DxDateBox
@@ -73,6 +75,8 @@
           :max="params1"
           :onValueChanged="onChange"
           v-if="item.type === 'date' && typeValue > 19"
+          display-format="dd/MM/yy"
+          dateSerializationFormat="yyyy-MM-dd"
           type="date"
         />
       </div>
@@ -88,6 +92,8 @@
           :min="params"
           :onValueChanged="onChange"
           v-if="item.type === 'date' && typeValue > 19"
+          display-format="dd/MM/yy"
+          dateSerializationFormat="yyyy-MM-dd"
         />
       </div>
     </div>
@@ -130,10 +136,9 @@ export default {
     onChange() {
       if (this.selected && this.typeValue !== "") {
         this.payload[this.item.class] = {
-          isFilter: true,
           type: this.typeValue,
-          params: this.params,
-          params1: this.params1,
+          value1: this.params,
+          value2: this.params1,
         };
       } else {
         delete this.payload[this.item.class];

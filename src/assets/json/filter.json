@@ -1,27 +1,29 @@
 {
   "text": [
-    { "id": 3, "name": "Trống" },
-    { "id": 4, "name": "Không trống" },
-    { "id": 10, "name": "Băng" },
-    { "id": 11, "name": "Không bằng" }
+    { "id": "3", "name": "Trống" },
+    { "id": "4", "name": "Không trống" },
+    { "id": "10", "name": "Bằng" },
+    { "id": "11", "name": "Không bằng" }
   ],
   "gender": [
-    { "id": 0, "name": "Tất cả" },
-    { "id": 1, "name": "Nam" },
-    { "id": 2, "name": "Nữ" }
+    { "id": "0", "name": "Tất cả" },
+    { "id": "1", "name": "Nam" },
+    { "id": "2", "name": "Nữ" }
   ],
   "number": [
-    { "id": 3, "name": "Trống" },
-    { "id": 4, "name": "Không trống" },
-    { "id": 12, "name": "Lớn hơn" },
-    { "id": 13, "name": "Nhỏ hơn" },
-    { "id": 20, "name": "Trong khoảng" }
+    { "id": "3", "name": "Trống" },
+    { "id": "4", "name": "Không trống" },
+    { "id": "10", "name": "Bằng" },
+    { "id": "12", "name": "Lớn hơn" },
+    { "id": "13", "name": "Nhỏ hơn" },
+    { "id": "20", "name": "Trong khoảng" }
   ],
   "date": [
-    { "id": 3, "name": "Trống" },
-    { "id": 4, "name": "Không trống" },
-    { "id": 14, "name": "Sau ngày" },
-    { "id": 15, "name": "Trước ngày" },
-    { "id": 21, "name": "Trong khoảng" }
+    { "id": "3", "name": "Trống" },
+    { "id": "4", "name": "Không trống" },
+    { "id": "10", "name": "Bằng" },
+    { "id": "14", "name": "Sau ngày" },
+    { "id": "15", "name": "Trước ngày" },
+    { "id": "21", "name": "Trong khoảng" }
   ]
 }
