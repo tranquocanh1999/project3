@@ -23,7 +23,7 @@
           type="button"
           class="btn vue-button-primary-danger"
           @click="onConfirmClicked()"
-          v-if="option.buttonConfirm === 'delete'"
+          v-if="option.type === 'confirm' && option.buttonConfirm === 'delete'"
         >
           Xóa
         </button>
@@ -31,7 +31,7 @@
           type="button"
           class="btn vue-button-primary"
           @click="onConfirmClicked()"
-          v-if="option.buttonConfirm !== 'delete'"
+          v-if="option.type === 'confirm' && option.buttonConfirm !== 'delete'"
         >
           Đồng ý
         </button>
@@ -52,16 +52,6 @@
 import { event } from "@/js/event.js";
 export default {
   name: "confirm",
-  props: {
-    popupVisible: {
-      type: Boolean,
-      default: false,
-    },
-    option: {
-      type: [Array, Object],
-      default: null,
-    },
-  },
   data() {
     return {
       closeButton: {
@@ -71,17 +61,25 @@ export default {
           this.onCancelClicked();
         },
       },
+      popupVisible: false,
+      option: [],
     };
   },
   methods: {
     onCancelClicked() {
-      this.$emit("update:popupVisible", false);
+      this.popupVisible = false;
       event.emit("confirm-event");
     },
     onConfirmClicked() {
       event.emit("confirm-event", true);
-      this.$emit("update:popupVisible", false);
+      this.popupVisible = false;
     },
+  },
+  mounted() {
+    event.on("open-confirm", (payLoad) => {
+      this.option = payLoad;
+      this.popupVisible = true;
+    });
   },
 };
 </script>

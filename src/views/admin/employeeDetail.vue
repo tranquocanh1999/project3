@@ -307,7 +307,7 @@ export default {
     this.position = status.employeePosition.slice(1, 3);
     if (this.id != 0) {
       const response = await employeeAPI.getById(this.id);
-      this.employee = response.data;
+      this.employee = response;
       this.isUpdate = true;
     }
   },

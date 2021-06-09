@@ -65,7 +65,7 @@ export default {
     async getAll() {
       const response = await employeeAPI.paging(this.payload);
       this.totalElements = response.data.totalElement;
-      this.listData = response.data.data;
+      this.listData = response.data;
     },
     async onHandleCreateSuccess() {
       await this.getAll();

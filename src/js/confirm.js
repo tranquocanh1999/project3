@@ -1,3 +1,4 @@
+import { event } from "@/js/event.js";
 class confirm {
   options = {
     type: "",
@@ -6,6 +7,15 @@ class confirm {
     buttonConfirm: "",
     buttonCancel: "",
   };
+
+  openConfirm(options){
+    
+    event.emit("open-confirm",options);
+  }
+
+  closeConfirm(options){
+    event.emit("close-confirm",options);
+  }
 
   deleteConfirm() {
     this.options.type = "confirm";

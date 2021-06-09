@@ -10,14 +10,13 @@
         <div class="content">
           <router-view name="content" />
         </div>
-       
       </router-view>
     </div>
+    <confirm></confirm>
   </div>
 </template>
 
 <script>
-
 import { sizes, subscribe, unsubscribe } from "./utils/media-query";
 
 function getScreenSizeInfo() {
@@ -26,7 +25,7 @@ function getScreenSizeInfo() {
   return {
     isXSmall: screenSizes["screen-x-small"],
     isLarge: screenSizes["screen-large"],
-    cssClasses: Object.keys(screenSizes).filter(cl => screenSizes[cl])
+    cssClasses: Object.keys(screenSizes).filter((cl) => screenSizes[cl]),
   };
 }
 
@@ -35,18 +34,18 @@ export default {
   data() {
     return {
       title: this.$appInfo.title,
-      screen: getScreenSizeInfo()
+      screen: getScreenSizeInfo(),
     };
   },
   computed: {
     cssClasses() {
       return ["app"].concat(this.screen.cssClasses);
-    }
+    },
   },
   methods: {
     screenSizeChanged() {
       this.screen = getScreenSizeInfo();
-    }
+    },
   },
 
   mounted() {
@@ -57,9 +56,7 @@ export default {
     unsubscribe(this.screenSizeChanged);
   },
 
-  components: {
- 
-  }
+  components: {},
 };
 </script>
 

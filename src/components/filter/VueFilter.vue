@@ -42,7 +42,6 @@
 </template>
 
 <script>
-
 export default {
   name: "vue-filter",
   props: {
@@ -61,10 +60,12 @@ export default {
   methods: {
     onHandleClick() {
       this.$emit("onCloseFilter");
+      this.$emit("update:payload", []);
+      this.$emit("onSubmit");
     },
     onSubmit() {
       this.payload;
-      this.$emit("onSubmit", this.payload);
+      this.$emit("onSubmit");
     },
     removeAccents(str) {
       var AccentsMap = [

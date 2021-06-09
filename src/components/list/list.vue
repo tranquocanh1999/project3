@@ -120,16 +120,12 @@
         ></vue-filter>
       </div>
     </div>
-    <confirm
-      :popupVisible.sync="confirmVisible"
-      :option="confirmOption"
-    ></confirm>
   </div>
 </template>
 
 <script>
 import { event } from "@/js/event.js";
-import confirmOption from "@/js/confirm.js";
+import confirm from "@/js/confirm.js";
 import notify from "devextreme/ui/notify";
 export default {
   name: "vue-list",
@@ -213,8 +209,8 @@ export default {
       this.$emit("createClicked");
     },
     delete(id) {
-      this.confirmOption = { ...confirmOption.deleteConfirm() };
-      this.confirmVisible = true;
+      this.confirmOption = { ...confirm.deleteConfirm() };
+      confirm.openConfirm(this.confirmOption);
       event.once("confirm-event", (data) => {
         if (data === true) {
           this.$emit("deleteClicked", id);
@@ -222,8 +218,8 @@ export default {
       });
     },
     mutilDelete(ids) {
-      this.confirmOption = { ...confirmOption.deletesConfirm() };
-      this.confirmVisible = true;
+      this.confirmOption = { ...confirm.deletesConfirm() };
+      confirm.openConfirm(this.confirmOption);
       event.once("confirm-event", (data) => {
         if (data === true) {
           var id = ids.join("','");
