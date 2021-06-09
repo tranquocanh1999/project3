@@ -103,6 +103,7 @@
           :data="data"
           @onSelectionChanged="onSelectionRows"
           @onChangePageSize="onChangePageSize"
+          @onChangePage="onChangePage"
           selectionMode
           :selecBox="selectBox"
           :deleteMode="deleteMode"
@@ -225,13 +226,18 @@ export default {
       this.confirmVisible = true;
       event.once("confirm-event", (data) => {
         if (data === true) {
-          console.log(ids);
+          var id = ids.join("','");
+          this.$emit("deleteClicked", id);
           notify("Xóa thành công", "success", 1000);
         }
       });
     },
     onChangePageSize(numberElementsOfPage) {
       this.payload.pageSize = numberElementsOfPage;
+      this.onFilter();
+    },
+    onChangePage(pageNumber) {
+      this.payload.offSet = pageNumber;
       this.onFilter();
     },
 
@@ -252,13 +258,11 @@ export default {
       this.$emit("onFilter", payload);
     },
     onHandleSelection(item) {
-      if (item.value == "0") {
-        delete this.payload.advancedFilter[item.class];
-        console.log(this.payload.advancedFilter[item.class]);
+      if (item.value == "-1") {
+        delete this.payload.filter[item.class];
       } else if (item.value != 0) {
-        this.payload.advancedFilter[item.class] = {
-          type: "10",
-          value1: item.value,
+        this.payload.filter[item.class] = {
+          type: item.value,
         };
       }
 

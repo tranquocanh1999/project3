@@ -75,7 +75,11 @@
                 <DxTextBox :value.sync="employee.issuePlace" />
               </field>
               <field v-if="!employee.id" label="Ngày sinh">
-                <DxDateBox :value.sync="employee.dateOfBirth" type="date" />
+                <DxDateBox
+                  :value.sync="employee.dateOfBirth"
+                  dateSerializationFormat="yyyy-MM-ddTHH:mm:ss"
+                  type="date"
+                />
               </field>
             </div>
             <div class="w-50 d-block ml-30">
@@ -99,6 +103,7 @@
                 <DxDateBox
                   display-format="dd/MM/yyyy"
                   :value.sync="employee.issueDate"
+                  dateSerializationFormat="yyyy-MM-ddTHH:mm:ss"
                   type="date"
                 />
               </field>
@@ -109,6 +114,7 @@
                 <DxDateBox
                   display-format="dd/MM/yyyy"
                   :value.sync="employee.dateOfBirth"
+                  dateSerializationFormat="yyyy-MM-ddTHH:mm:ss"
                   type="date"
                 />
               </field>
@@ -123,7 +129,7 @@
                     :items="position"
                     display-expr="name"
                     value-expr="id"
-                    :value.sync="employee.positionId"
+                    :value.sync="employee.position"
                   />
                 </field>
                 <field
@@ -138,6 +144,7 @@
                   <DxDateBox
                     display-format="dd/MM/yyyy"
                     :value.sync="employee.joinDate"
+                    dateSerializationFormat="yyyy-MM-ddTHH:mm:ss"
                     type="date"
                   />
                 </field>
@@ -155,7 +162,7 @@
                     :items="status"
                     display-expr="name"
                     value-expr="id"
-                    :value.sync="employee.statusId"
+                    :value.sync="employee.status"
                   />
                 </field>
               </div>
@@ -230,8 +237,8 @@ export default {
         email: "",
         employeeCode: "",
         fullName: "",
-        positionId: 1,
-        statusId: 1,
+        position: "1",
+        status: "1",
         address: "",
         phoneNumber: "",
         image:
@@ -254,8 +261,8 @@ export default {
         email: "",
         employeeCode: "",
         fullName: "",
-        positionId: 1,
-        statusId: 1,
+        position: "1",
+        status: "1",
         address: "",
         phoneNumber: "",
         image: "",
@@ -283,10 +290,10 @@ export default {
           this.employee.image = await uploadImg(this.fileImage);
           console.log(this.employee.image);
         }
+        console.log(1);
         if (this.isUpdate) {
           await employeeAPI.update(this.employee.id, this.employee);
         } else {
-          this.employee.id = 10;
           await employeeAPI.insert(this.employee);
         }
 

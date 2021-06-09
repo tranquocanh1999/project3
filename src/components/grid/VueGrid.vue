@@ -7,6 +7,7 @@
       :show-borders="true"
       :allow-column-reordering="true"
       @selection-changed="onSelectionChanged"
+      @option-changed="handlePropertyChange"
       ref="dataGrid"
       key-expr="id"
       :hoverStateEnabled="true"
@@ -143,11 +144,25 @@ export default {
   },
 
   methods: {
+    handlePropertyChange() {
+      this.countInfor();
+    },
     onSelectionChanged(e) {
       this.$emit("onSelectionChanged", e.selectedRowKeys);
     },
     onChangePageSize() {
       this.$emit("onChangePageSize", this.numberElementsOfPage);
+    },
+    onChangePage() {
+      this.$emit("onChangePage", this.pageNumber - 1);
+    },
+    countInfor() {
+      this.elementFrom = (this.pageNumber - 1) * this.numberElementsOfPage + 1;
+      this.elementTo = this.pageNumber * this.numberElementsOfPage;
+      this.elementTo =
+        this.elementTo < parseInt(this.totalElements)
+          ? this.elementTo
+          : parseInt(this.totalElements);
     },
     onHandleSelecBox(value) {
       if (this.name === "employee") {
@@ -162,8 +177,14 @@ export default {
       }
     },
 
-    prevClick() {},
-    nextClick() {},
+    prevClick() {
+      this.pageNumber--;
+      this.onChangePage();
+    },
+    nextClick() {
+      this.pageNumber++;
+      this.onChangePage();
+    },
     getTemplate(data) {
       if (data.class === "image") return "image";
       if (data.class === "gender") return "gender";
@@ -180,6 +201,9 @@ export default {
         dataGrid.clearSelection();
       }
     },
+  },
+  created() {
+    this.countInfor();
   },
 };
 </script>

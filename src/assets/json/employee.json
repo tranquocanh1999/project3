@@ -114,7 +114,7 @@
             "name": "Lương cơ bản",
             "width": "200",
             "isFilter": true,
-            "type": "text"
+            "type": "number"
         },
         {
             "id": 17,

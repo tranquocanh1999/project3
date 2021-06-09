@@ -3,7 +3,7 @@
     <vue-list
       :data="listData"
       :header="employee.header"
-      totalElements="3"
+      :totalElements="totalElements"
       @createClicked="onCreateClicked()"
       @deleteClicked="onDeleteClicked($event)"
       @updateClicked="onCreateClicked($event)"
@@ -37,18 +37,19 @@ export default {
       listData: [],
       detailVisible: false,
       updateId: 0,
+      totalElements: 0,
       headerSelecBox: {
         status: {
           class: "status",
           title: "Trạng thái",
           data: status.employee,
-          value: 0,
+          value: "-1",
         },
         position: {
           class: "position",
           title: "Vị trí",
           data: status.employeePosition,
-          value: 0,
+          value: "-1",
         },
       },
       payload: {
@@ -63,7 +64,7 @@ export default {
     // lấy dữ liệu từ serve
     async getAll() {
       const response = await employeeAPI.paging(this.payload);
-
+      this.totalElements = response.data.totalElement;
       this.listData = response.data.data;
     },
     async onHandleCreateSuccess() {
@@ -81,7 +82,7 @@ export default {
       this.detailVisible = true;
     },
     async onDeleteClicked(id) {
-      await employeeAPI.delete(id);
+      await employeeAPI.delete("'" + id + "'");
       this.getAll();
       notify("Xóa thành công", "success", 1000);
     },

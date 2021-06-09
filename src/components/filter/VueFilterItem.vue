@@ -137,8 +137,8 @@ export default {
       if (this.selected && this.typeValue !== "") {
         this.payload[this.item.class] = {
           type: this.typeValue,
-          value1: this.params,
-          value2: this.params1,
+          value1: this.params.toString(),
+          value2: this.params1.toString(),
         };
       } else {
         delete this.payload[this.item.class];

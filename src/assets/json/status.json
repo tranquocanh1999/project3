@@ -1,48 +1,48 @@
 {
     "product": [{
-            "id": 0,
+            "id": "-1",
             "name": "Tất cả"
         },
         {
-            "id": 1,
+            "id": "1",
             "name": "Đang bán"
         },
         {
-            "id": 2,
+            "id": "2",
             "name": "Hết hàng"
         },
         {
-            "id": 3,
+            "id": "3",
             "name": "Ngưng bán"
         }
     ],
     "employee": [{
-            "id": 0,
+            "id": "-1",
             "name": "Tất cả"
         },
         {
-            "id": 1,
+            "id": "1",
             "name": "Đang làm việc"
         },
         {
-            "id": 2,
+            "id": "2",
             "name": "Thử việc"
         },
         {
-            "id": 3,
+            "id": "3",
             "name": "Nghỉ làm"
         }
     ],
     "employeePosition": [{
-            "id": 0,
+            "id": "-1",
             "name": "Tất cả"
         },
         {
-            "id": 1,
+            "id": "1",
             "name": "Nhân viên bán hàng"
         },
         {
-            "id": 2,
+            "id": "2",
             "name": "Nhân viên kho"
         }
     ]
