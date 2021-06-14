@@ -53,7 +53,7 @@ export default {
         },
       },
       payload: {
-        pageSize: 20,
+        pageSize: 25,
         offSet: 0,
         param: "",
         filter: [],
@@ -64,7 +64,7 @@ export default {
     // lấy dữ liệu từ serve
     async getAll() {
       const response = await employeeAPI.paging(this.payload);
-      this.totalElements = response.data.totalElement;
+      this.totalElements = response.totalElement;
       this.listData = response.data;
     },
     async onHandleCreateSuccess() {

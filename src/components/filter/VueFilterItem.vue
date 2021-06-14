@@ -134,10 +134,16 @@ export default {
     },
 
     onChange() {
-      if (this.selected && this.typeValue !== "") {
+      if (
+        (this.selected && this.typeValue !== "") ||
+        (this.selected && this.typeValue !== -1)
+      ) {
         this.payload[this.item.class] = {
-          type: this.typeValue,
-          value1: this.params.toString(),
+          type: this.item.type === "gender" ? "1" : this.typeValue,
+          value1:
+            this.item.type === "gender"
+              ? this.typeValue
+              : this.params.toString(),
           value2: this.params1.toString(),
         };
       } else {
@@ -150,7 +156,10 @@ export default {
     if (this.item.type === "date") this.type = this.filter.date;
     else if (this.item.type === "number") this.type = this.filter.number;
     else if (this.item.type === "text") this.type = this.filter.text;
-    else if (this.item.type === "gender") this.type = this.filter.gender;
+    else if (this.item.type === "gender") {
+      this.type = this.filter.gender;
+      this.typeValue = "-1";
+    }
   },
 };
 </script>

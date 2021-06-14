@@ -41,6 +41,14 @@ class confirm {
     return this.options;
   }
 
+  discardConfirm(){
+    this.options.type = "confirm";
+    this.options.text = "Một số thay đổi chưa được lưu. Bạn có muốn thoát không?";
+    this.options.buttonConfirm = "apply";
+    this.options.buttonCancel = "cancel";
+    return this.options; 
+  }
+
   editConfirm() {
     this.options.type = "confirm";
     this.options.text = "Bạn có muốn lưu chỉnh sửa bản ghi này không?";

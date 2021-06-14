@@ -230,6 +230,7 @@ export default {
     },
     onChangePageSize(numberElementsOfPage) {
       this.payload.pageSize = numberElementsOfPage;
+      this.payload.offSet = 0;
       this.onFilter();
     },
     onChangePage(pageNumber) {
@@ -251,6 +252,7 @@ export default {
       const payload = { ...this.payload };
       payload.filter = filter;
       console.log(payload);
+      console.log(payload);
       this.$emit("onFilter", payload);
     },
     onHandleSelection(item) {
@@ -258,7 +260,8 @@ export default {
         delete this.payload.filter[item.class];
       } else if (item.value != 0) {
         this.payload.filter[item.class] = {
-          type: item.value,
+          type: "1",
+          value1: item.value,
         };
       }
 

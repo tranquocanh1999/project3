@@ -2,29 +2,40 @@
   <vue-list
     :header="billList.header"
     :data="listData"
-    totalElements="3"
+    :totalElements="totalElements"
     title="Danh Sách Đơn Hàng Bán"
     placeholder="Tìm kiếm theo tên hoặc mã đơn hàng "
+    @onFilter="onFilter($event)"
   ></vue-list>
 </template>
 
 <script>
+import billAPI from "@/api/components/Bill/BillAPI.js";
 import billList from "@/assets/json/receipt-sale.json";
-import receiptSaleAPI from "@/api/components/Receipt-sales/ReceiptSaleAPI.js";
 export default {
   data() {
     return {
       billList,
       listData: [],
+      totalElements: 0,
+      payload: {
+        pageSize: 25,
+        offSet: 0,
+        param: "",
+        filter: [],
+      },
     };
   },
   methods: {
     // lấy dữ liệu từ serve
     async getAll() {
-      console.log(this.payload);
-      const response = await receiptSaleAPI.getAll();
-
+      const response = await billAPI.paging(this.payload);
+      this.totalElements = response.totalElement;
       this.listData = response.data;
+    },
+    onFilter(payload) {
+      this.payload = { ...payload };
+      this.getAll();
     },
   },
   async created() {

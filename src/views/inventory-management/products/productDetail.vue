@@ -24,86 +24,100 @@
             text="Ảnh minh họa sản phẩm "
           ></image-input>
         </div>
-        <div
-          class="infor h-100 pl-50 ml-30 mb-30"
-          style="width: 800px;   overflow-y: auto;"
-        >
-          <div class="text-bold text-large">Thông tin sản phẩm</div>
-          <div class="d-flex ">
-            <div class="w-50 d-block">
-              <field label="Mã sản phẩm" v-if="product.productCode">
-                <DxTextBox
-                  :value.sync="product.productCode"
-                  :read-only="true"
-                />
-              </field>
-              <field
-                label="Tên sản phẩm"
-                :messageErr="errMsg.productName"
-                targetID="productName"
-                required
-              >
-                <DxTextBox :value.sync="product.productName" />
-              </field>
-              <field
-                label="Giá nhập"
-                :messageErr="errMsg.priceIn"
-                targetID="priceIn"
-                required
-              >
-                <DxNumberBox
-                  :value.sync="product.priceIn"
-                  :format="product.priceIn ? '#,### VNĐ' : '#,### '"
-                  :min="0"
-                />
-              </field>
-              <field
-                label="Giá bán"
-                :messageErr="errMsg.priceOut"
-                targetID="priceOut"
-                required
-                v-if="!product.productCode"
-              >
-                <DxNumberBox
-                  :value.sync="product.priceOut"
-                  :format="product.priceOut ? '#,### VNĐ' : '#,###'"
-                  :min="0"
-                />
-              </field>
+        <div class="infor h-100 pl-50 ml-30 mb-30" style="width: 800px;  ">
+          <DxScrollView
+            id="scrollview"
+            ref="scrollViewWidget"
+            reach-bottom-text="Updating..."
+          >
+            <div class="text-bold text-large">Thông tin sản phẩm</div>
+            <div class="d-flex ">
+              <div class="w-50 d-block">
+                <field label="Mã sản phẩm" v-if="product.productCode">
+                  <DxTextBox
+                    :value.sync="product.productCode"
+                    :read-only="true"
+                  />
+                </field>
+                <field
+                  label="Tên sản phẩm"
+                  :messageErr="errMsg.productName"
+                  targetID="productName"
+                  required
+                >
+                  <DxTextBox
+                    :onValueChanged="onChangeValue"
+                    :value.sync="product.productName"
+                  />
+                </field>
+                <field
+                  label="Giá nhập"
+                  :messageErr="errMsg.priceIn"
+                  targetID="priceIn"
+                  required
+                >
+                  <DxNumberBox
+                    :onValueChanged="onChangeValue"
+                    :value.sync="product.priceIn"
+                    :format="product.priceIn ? '#,### VNĐ' : '#,### '"
+                    :min="0"
+                  />
+                </field>
+                <field
+                  label="Giá bán"
+                  :messageErr="errMsg.priceOut"
+                  targetID="priceOut"
+                  required
+                  v-if="!product.productCode"
+                >
+                  <DxNumberBox
+                    :onValueChanged="onChangeValue"
+                    :value.sync="product.priceOut"
+                    :format="product.priceOut ? '#,### VNĐ' : '#,###'"
+                    :min="0"
+                  />
+                </field>
+              </div>
+              <div class="w-50 d-block">
+                <field
+                  label="Loại sản phẩm"
+                  :messageErr="errMsg.category"
+                  targetID="category"
+                  required
+                >
+                  <DxSelectBox
+                    :onValueChanged="onChangeValue"
+                    :items="category"
+                    display-expr="name"
+                    value-expr="id"
+                    placeholder="Chọn loại sản phẩm"
+                    :value.sync="product.category"
+                  />
+                </field>
+                <field label="Số lượng" required>
+                  <DxNumberBox
+                    :onValueChanged="onChangeValue"
+                    :value.sync="product.quantity"
+                    :min="0"
+                  />
+                </field>
+                <field
+                  label="Giá bán"
+                  :messageErr="errMsg.priceOut"
+                  targetID="priceOut"
+                  v-if="product.productCode"
+                  required
+                >
+                  <DxNumberBox
+                    :onValueChanged="onChangeValue"
+                    :value.sync="product.priceOut"
+                    :format="product.priceOut ? '#,### VNĐ' : '#,###'"
+                    :min="0"
+                  />
+                </field>
+              </div>
             </div>
-            <div class="w-50 d-block">
-              <field
-                label="Loại sản phẩm"
-                :messageErr="errMsg.category"
-                targetID="category"
-                required
-              >
-                <DxSelectBox
-                  :items="category"
-                  display-expr="name"
-                  value-expr="id"
-                  placeholder="Chọn loại sản phẩm"
-                  :value.sync="product.category"
-                />
-              </field>
-              <field label="Số lượng" required>
-                <DxNumberBox :value.sync="product.quantity" :min="0" />
-              </field>
-              <field
-                label="Giá bán"
-                :messageErr="errMsg.priceOut"
-                targetID="priceOut"
-                v-if="product.productCode"
-                required
-              >
-                <DxNumberBox
-                  :value.sync="product.priceOut"
-                  :format="product.priceOut ? '#,### VNĐ' : '#,###'"
-                  :min="0"
-                />
-              </field>
-            </div>
-          </div>
+          </DxScrollView>
         </div>
       </div>
       <div class="popup-event d-flex mt-auto pt-30  ">
@@ -128,9 +142,12 @@
 </template>
 
 <script>
+import notify from "devextreme/ui/notify";
 import category from "@/assets/json/category.json";
 import uploadImg from "@/js/uploadImg.js";
 import validator from "@/js/validator/product.js";
+import { event } from "@/js/event.js";
+import confirm from "@/js/confirm.js";
 import productAPI from "@/api/components/Product/ProductAPI.js";
 export default {
   name: "product-detail",
@@ -153,6 +170,7 @@ export default {
       fileImage: null,
       imgChange: false,
       isUpdate: false,
+      isChange: false,
       closeButton: {
         type: "close",
         icon: "close",
@@ -193,9 +211,21 @@ export default {
   },
   methods: {
     onCancelClicked() {
-      this.$emit("update:popupVisible", false);
-      this.$emit("success");
-      this.product = { ...this.productDefault };
+      if (this.isChange) {
+        this.confirmOption = { ...confirm.discardConfirm() };
+        confirm.openConfirm(this.confirmOption);
+        event.once("confirm-event", (data) => {
+          if (data === true) {
+            this.$emit("update:popupVisible", false);
+            this.$emit("success");
+            this.product = { ...this.productDefault };
+          }
+        });
+      } else {
+        this.$emit("update:popupVisible", false);
+        this.$emit("success");
+        this.employee = { ...this.employeeDefault };
+      }
     },
 
     async onConfirmClicked() {
@@ -208,20 +238,39 @@ export default {
           console.log(this.product.image);
         }
         if (this.isUpdate) {
-          await productAPI.update(this.product.id, this.product);
+          this.confirmOption = confirm.editConfirm();
+          confirm.openConfirm(this.confirmOption);
+          event.once("confirm-event", async (data) => {
+            if (data === true) {
+              await productAPI.update(this.product.id, this.product);
+              this.isChange = false;
+              notify("Sửa thành công", "success", 2000);
+              this.onCancelClicked();
+            }
+          });
         } else {
-          this.product.id = 10;
-          await productAPI.insert(this.product);
-        }
+          this.confirmOption = confirm.createConfirm();
+          confirm.openConfirm(this.confirmOption);
+          event.once("confirm-event", async (data) => {
+            if (data === true) {
+              await productAPI.insert(this.product);
+              notify("Thêm thành công", "success", 2000);
+              this.isChange = false;
 
-        this.onCancelClicked();
-      }
+              this.onCancelClicked();
+            }
+          });
+        }
+      } else notify("Vui lòng nhập đủ trường bắt buộc", "warning", 2000);
+    },
+    onChangeValue() {
+      this.isChange = true;
     },
   },
   async created() {
     if (this.id != 0) {
       const response = await productAPI.getById(this.id);
-      this.product = response.data;
+      this.product = response;
       this.isUpdate = true;
     }
   },

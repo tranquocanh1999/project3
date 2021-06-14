@@ -1,7 +1,9 @@
 const defaultUser = {
-  email: 'sandra@example.com',
-  avatarUrl: 'https://js.devexpress.com/Demos/WidgetsGallery/JSDemos/images/employees/06.png'
+  email: "sandra@example.com",
+  avatarUrl:
+    "https://js.devexpress.com/Demos/WidgetsGallery/JSDemos/images/employees/06.png",
 };
+import EmployeeAPI from "./api/components/Employee/EmployeeAPI";
 
 export default {
   _user: defaultUser,
@@ -10,22 +12,20 @@ export default {
   },
 
   async logIn(email, password) {
-    try {
-      // Send request
-      console.log(email, password);
-      this._user = { ...defaultUser, email };
-
-      return {
-        isOk: true,
-        data: this._user
-      };
-    }
-    catch {
+    // try {
+    // Send request
+    var response = await EmployeeAPI.login(email, password);
+    this._user = response;
+    if (response.status == 400) {
       return {
         isOk: false,
-        message: "Authentication failed"
+        message: response.data.userMsg[0],
       };
     }
+    return {
+      isOk: true,
+      data: this._user,
+    };
   },
 
   async logOut() {
@@ -38,12 +38,11 @@ export default {
 
       return {
         isOk: true,
-        data: this._user
+        data: this._user,
       };
-    }
-    catch {
+    } catch {
       return {
-        isOk: false
+        isOk: false,
       };
     }
   },
@@ -54,13 +53,12 @@ export default {
       console.log(email);
 
       return {
-        isOk: true
+        isOk: true,
       };
-    }
-    catch {
+    } catch {
       return {
         isOk: false,
-        message: "Failed to reset password"
+        message: "Failed to reset password",
       };
     }
   },
@@ -71,14 +69,13 @@ export default {
       console.log(email, recoveryCode);
 
       return {
-        isOk: true
+        isOk: true,
       };
-    }
-    catch {
+    } catch {
       return {
         isOk: false,
-        message: "Failed to change password"
-      }
+        message: "Failed to change password",
+      };
     }
   },
 
@@ -88,14 +85,13 @@ export default {
       console.log(email, password);
 
       return {
-        isOk: true
+        isOk: true,
       };
-    }
-    catch {
+    } catch {
       return {
         isOk: false,
-        message: "Failed to create account"
+        message: "Failed to create account",
       };
     }
-  }
+  },
 };

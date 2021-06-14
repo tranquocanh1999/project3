@@ -40,5 +40,8 @@
 
 .dx-field-value {
     float: none;
-    width: 90%
+
+}
+.w-100 .dx-field-value {
+    width: 100% !important;
 }

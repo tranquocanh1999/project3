@@ -2,9 +2,14 @@
   <div class="user-panel">
     <div class="user-info">
       <div class="image-container">
-        <div class="user-image" />
+        <div
+          class="user-image"
+          :style="{
+            'background-image': `url(${user.image})`,
+          }"
+        />
       </div>
-      <div class="user-name">{{user.email}}</div>
+      <div class="user-name">{{ user.email }}</div>
     </div>
 
     <dx-context-menu
@@ -34,13 +39,13 @@ export default {
   props: {
     menuMode: String,
     menuItems: Array,
-    user: Object
+    user: Object,
   },
   components: {
     DxContextMenu,
     DxPosition,
-    DxList
-  }
+    DxList,
+  },
 };
 </script>
 
@@ -68,8 +73,7 @@ export default {
     .user-image {
       width: 100%;
       height: 100%;
-      background: url("https://js.devexpress.com/Demos/WidgetsGallery/JSDemos/images/employees/06.png")
-        no-repeat #fff;
+      background-repeat: no-repeat #fff;
       background-size: cover;
     }
   }

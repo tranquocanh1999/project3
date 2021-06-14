@@ -2,7 +2,7 @@
   "header": [
     {
       "id": 1,
-      "class": "receiptSaleCode",
+      "class": "billCode",
       "name": "Mã biên lai",
       "width": "200",
       "isFilter": true,
@@ -18,8 +18,16 @@
     },
     {
       "id": 3,
-      "class": "totalPrice",
+      "class": "amount",
       "name": "Tổng tiền",
+      "width": "350",
+      "isFilter": true,
+      "type": "number"
+    },
+    {
+      "id": 5,
+      "class": "promotion",
+      "name": "Khuyến mãi giảm",
       "width": "350",
       "isFilter": true,
       "type": "number"

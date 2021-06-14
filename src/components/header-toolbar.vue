@@ -76,12 +76,12 @@ export default {
       user: {},
       userMenuItems: [
         {
-          text: "Profile",
+          text: "Thông tin cá nhân",
           icon: "user",
           onClick: this.onProfileClick,
         },
         {
-          text: "Logout",
+          text: "Đăng xuất",
           icon: "runner",
           onClick: this.onLogoutClick,
         },

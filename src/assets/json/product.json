@@ -34,7 +34,7 @@
             "class": "category",
             "name": "Loại",
             "width": "250",
-            "isFilter": true,
+            "isFilter": false,
             "type": "selectBox"
         },
         {

@@ -76,11 +76,15 @@
         <div class="page-paging">
           <div
             class="btn-prev "
-            @click="prevClick"
+            @click="prevClick(!(pageNumber < 2))"
             :class="{ disable: pageNumber < 2 }"
           ></div>
           <div
-            @click="nextClick"
+            @click="
+              nextClick(
+                !(Math.ceil(totalElements / numberElementsOfPage) <= pageNumber)
+              )
+            "
             :class="{
               disable:
                 Math.ceil(totalElements / numberElementsOfPage) <= pageNumber,
@@ -151,6 +155,7 @@ export default {
       this.$emit("onSelectionChanged", e.selectedRowKeys);
     },
     onChangePageSize() {
+      this.pageNumber = 1;
       this.$emit("onChangePageSize", this.numberElementsOfPage);
     },
     onChangePage() {
@@ -177,13 +182,17 @@ export default {
       }
     },
 
-    prevClick() {
-      this.pageNumber--;
-      this.onChangePage();
+    prevClick(check) {
+      if (check) {
+        this.pageNumber--;
+        this.onChangePage();
+      }
     },
-    nextClick() {
-      this.pageNumber++;
-      this.onChangePage();
+    nextClick(check) {
+      if (check) {
+        this.pageNumber++;
+        this.onChangePage();
+      }
     },
     getTemplate(data) {
       if (data.class === "image") return "image";

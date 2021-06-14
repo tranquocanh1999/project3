@@ -24,150 +24,182 @@
             text="Ảnh đại diện"
           ></image-input>
         </div>
-        <div
-          class="infor h-100 pl-50 ml-30 mb-30"
-          style="width: 800px;   overflow-y: auto;"
-        >
-          <div class="text-bold text-large">A.Thông tin chung</div>
-          <div class="d-flex ">
-            <div class="w-50 d-block">
-              <field
-                label="Mã nhân viên"
-                v-if="employee.employeeCode"
-                targetID="id"
-              >
-                <DxTextBox
-                  :value.sync="employee.employeeCode"
-                  :read-only="true"
-                />
-              </field>
-              <field
-                label="Số điện thoại"
-                :messageErr="errMsg.phoneNumber"
-                targetID="phoneNumber"
-                required
-              >
-                <DxTextBox :value.sync="employee.phoneNumber" />
-              </field>
-              <field
-                label="Giới tính"
-                :messageErr="errMsg.gender"
-                targetID="gender"
-                required
-              >
-                <DxSelectBox
-                  :items="gender"
-                  display-expr="name"
-                  value-expr="id"
-                  placeholder="Chọn giới tính"
-                  :value.sync="employee.gender"
-                />
-              </field>
-              <field
-                label="Số CMND/Thẻ căn cước"
-                :messageErr="errMsg.identityCardNumber"
-                targetID="identityCardNumber"
-                required
-              >
-                <DxTextBox :value.sync="employee.identityCardNumber" />
-              </field>
-              <field label="Nơi cấp">
-                <DxTextBox :value.sync="employee.issuePlace" />
-              </field>
-              <field v-if="!employee.id" label="Ngày sinh">
-                <DxDateBox
-                  :value.sync="employee.dateOfBirth"
-                  dateSerializationFormat="yyyy-MM-ddTHH:mm:ss"
-                  type="date"
-                />
-              </field>
-            </div>
-            <div class="w-50 d-block ml-30">
-              <field
-                label="Tên nhân viên"
-                :messageErr="errMsg.fullName"
-                targetID="fullName"
-                required
-              >
-                <DxTextBox :value.sync="employee.fullName" />
-              </field>
-              <field
-                label="Email"
-                :messageErr="errMsg.email"
-                targetID="email"
-                required
-              >
-                <DxTextBox :value.sync="employee.email" />
-              </field>
-              <field label="Ngày cấp">
-                <DxDateBox
-                  display-format="dd/MM/yyyy"
-                  :value.sync="employee.issueDate"
-                  dateSerializationFormat="yyyy-MM-ddTHH:mm:ss"
-                  type="date"
-                />
-              </field>
-              <field label="Địa chỉ">
-                <DxTextBox :value.sync="employee.address" />
-              </field>
-              <field v-if="employee.id" label="Ngày sinh">
-                <DxDateBox
-                  display-format="dd/MM/yyyy"
-                  :value.sync="employee.dateOfBirth"
-                  dateSerializationFormat="yyyy-MM-ddTHH:mm:ss"
-                  type="date"
-                />
-              </field>
-            </div>
-          </div>
-          <div class="text-bold text-large mt-20">B.Thông công việc</div>
-          <div>
+        <div class="infor h-100 pl-50 ml-30 mb-30" style="width: 800px;  ">
+          <DxScrollView
+            id="scrollview"
+            ref="scrollViewWidget"
+            reach-bottom-text="Updating..."
+          >
+            <div class="text-bold text-large">A.Thông tin chung</div>
             <div class="d-flex ">
               <div class="w-50 d-block">
-                <field label="Vị trí">
-                  <DxSelectBox
-                    :items="position"
-                    display-expr="name"
-                    value-expr="id"
-                    :value.sync="employee.position"
+                <field
+                  label="Mã nhân viên"
+                  v-if="employee.employeeCode"
+                  targetID="id"
+                >
+                  <DxTextBox
+                    :value.sync="employee.employeeCode"
+                    :read-only="true"
                   />
                 </field>
                 <field
-                  label="Mã số thuế cá nhân"
-                  :messageErr="errMsg.taxcode"
-                  targetID="taxcode"
+                  label="Số điện thoại"
+                  :messageErr="errMsg.phoneNumber"
+                  targetID="phoneNumber"
                   required
                 >
-                  <DxTextBox :value.sync="employee.taxcode" />
+                  <DxTextBox
+                    :value.sync="employee.phoneNumber"
+                    :onValueChanged="onChangeValue"
+                  />
                 </field>
-                <field label="Ngày bắt đầu làm việc">
+                <field
+                  label="Giới tính"
+                  :messageErr="errMsg.gender"
+                  targetID="gender"
+                  required
+                >
+                  <DxSelectBox
+                    :items="gender"
+                    display-expr="name"
+                    value-expr="id"
+                    placeholder="Chọn giới tính"
+                    :value.sync="employee.gender"
+                    :onValueChanged="onChangeValue"
+                  />
+                </field>
+                <field
+                  label="Số CMND/Thẻ căn cước"
+                  :messageErr="errMsg.identityCardNumber"
+                  targetID="identityCardNumber"
+                  required
+                >
+                  <DxTextBox
+                    :value.sync="employee.identityCardNumber"
+                    :onValueChanged="onChangeValue"
+                  />
+                </field>
+                <field label="Nơi cấp">
+                  <DxTextBox
+                    :value.sync="employee.issuePlace"
+                    :onValueChanged="onChangeValue"
+                  />
+                </field>
+                <field v-if="!employee.id" label="Ngày sinh">
                   <DxDateBox
-                    display-format="dd/MM/yyyy"
-                    :value.sync="employee.joinDate"
+                    :value.sync="employee.dateOfBirth"
                     dateSerializationFormat="yyyy-MM-ddTHH:mm:ss"
                     type="date"
+                    :onValueChanged="onChangeValue"
                   />
                 </field>
               </div>
-              <div class="w-50 d-block">
-                <field label="Lương cơ bản">
-                  <DxNumberBox
-                    :value.sync="employee.basicSalary"
-                    format="#,###"
-                    :min="0"
+              <div class="w-50 d-block ml-30">
+                <field
+                  label="Tên nhân viên"
+                  :messageErr="errMsg.fullName"
+                  targetID="fullName"
+                  required
+                >
+                  <DxTextBox
+                    :value.sync="employee.fullName"
+                    :onValueChanged="onChangeValue"
                   />
                 </field>
-                <field label="Tình trạng làm việc">
-                  <DxSelectBox
-                    :items="status"
-                    display-expr="name"
-                    value-expr="id"
-                    :value.sync="employee.status"
+                <field
+                  label="Email"
+                  :messageErr="errMsg.email"
+                  targetID="email"
+                  required
+                >
+                  <DxTextBox
+                    :value.sync="employee.email"
+                    :onValueChanged="onChangeValue"
+                  />
+                </field>
+                <field label="Ngày cấp">
+                  <DxDateBox
+                    display-format="dd/MM/yyyy"
+                    :value.sync="employee.issueDate"
+                    dateSerializationFormat="yyyy-MM-ddTHH:mm:ss"
+                    type="date"
+                    :onValueChanged="onChangeValue"
+                  />
+                </field>
+                <field label="Địa chỉ">
+                  <DxTextBox
+                    :value.sync="employee.address"
+                    :onValueChanged="onChangeValue"
+                  />
+                </field>
+                <field v-if="employee.id" label="Ngày sinh">
+                  <DxDateBox
+                    display-format="dd/MM/yyyy"
+                    :value.sync="employee.dateOfBirth"
+                    dateSerializationFormat="yyyy-MM-ddTHH:mm:ss"
+                    type="date"
+                    :onValueChanged="onChangeValue"
                   />
                 </field>
               </div>
             </div>
-          </div>
+            <div class="text-bold text-large mt-20">B.Thông công việc</div>
+            <div>
+              <div class="d-flex ">
+                <div class="w-50 d-block">
+                  <field label="Vị trí">
+                    <DxSelectBox
+                      :items="position"
+                      display-expr="name"
+                      value-expr="id"
+                      :value.sync="employee.position"
+                      :onValueChanged="onChangeValue"
+                    />
+                  </field>
+                  <field
+                    label="Mã số thuế cá nhân"
+                    :messageErr="errMsg.taxcode"
+                    targetID="taxcode"
+                    required
+                  >
+                    <DxTextBox
+                      :value.sync="employee.taxcode"
+                      :onValueChanged="onChangeValue"
+                    />
+                  </field>
+                  <field label="Ngày bắt đầu làm việc">
+                    <DxDateBox
+                      display-format="dd/MM/yyyy"
+                      :value.sync="employee.joinDate"
+                      dateSerializationFormat="yyyy-MM-ddTHH:mm:ss"
+                      type="date"
+                      :onValueChanged="onChangeValue"
+                    />
+                  </field>
+                </div>
+                <div class="w-50 d-block">
+                  <field label="Lương cơ bản">
+                    <DxNumberBox
+                      :value.sync="employee.basicSalary"
+                      format="#,###"
+                      :min="0"
+                      :onValueChanged="onChangeValue"
+                    />
+                  </field>
+                  <field label="Tình trạng làm việc">
+                    <DxSelectBox
+                      :items="status"
+                      display-expr="name"
+                      value-expr="id"
+                      :value.sync="employee.status"
+                      :onValueChanged="onChangeValue"
+                    />
+                  </field>
+                </div>
+              </div>
+            </div>
+          </DxScrollView>
         </div>
       </div>
       <div class="popup-event d-flex mt-auto pt-30  ">
@@ -192,9 +224,12 @@
 </template>
 
 <script>
+import notify from "devextreme/ui/notify";
 import uploadImg from "@/js/uploadImg.js";
 import validator from "@/js/validator/employee.js";
 import status from "@/assets/json/status.json";
+import { event } from "@/js/event.js";
+import confirm from "@/js/confirm.js";
 import employeeAPI from "@/api/components/Employee/EmployeeAPI.js";
 export default {
   name: "employee-detail",
@@ -216,6 +251,7 @@ export default {
       fileImage: null,
       imgChange: false,
       isUpdate: false,
+      isChange: false,
       closeButton: {
         type: "close",
         icon: "close",
@@ -277,11 +313,22 @@ export default {
   },
   methods: {
     onCancelClicked() {
-      this.$emit("update:popupVisible", false);
-      this.$emit("success");
-      this.employee = { ...this.employeeDefault };
+      if (this.isChange) {
+        this.confirmOption = { ...confirm.discardConfirm() };
+        confirm.openConfirm(this.confirmOption);
+        event.once("confirm-event", (data) => {
+          if (data === true) {
+            this.$emit("update:popupVisible", false);
+            this.$emit("success");
+            this.employee = { ...this.employeeDefault };
+          }
+        });
+      } else {
+        this.$emit("update:popupVisible", false);
+        this.$emit("success");
+        this.employee = { ...this.employeeDefault };
+      }
     },
-
     async onConfirmClicked() {
       const validate = validator(this.employee);
       this.errMsg = validate.errMsg;
@@ -290,15 +337,36 @@ export default {
           this.employee.image = await uploadImg(this.fileImage);
           console.log(this.employee.image);
         }
-        console.log(1);
-        if (this.isUpdate) {
-          await employeeAPI.update(this.employee.id, this.employee);
-        } else {
-          await employeeAPI.insert(this.employee);
-        }
 
-        this.onCancelClicked();
-      }
+        if (this.isUpdate) {
+          this.confirmOption = confirm.editConfirm();
+          confirm.openConfirm(this.confirmOption);
+          event.once("confirm-event", async (data) => {
+            if (data === true) {
+              await employeeAPI.update(this.employee.id, this.employee);
+              this.isChange = false;
+              notify("Sửa thành công", "success", 2000);
+              this.onCancelClicked();
+            }
+          });
+        } else {
+          this.confirmOption = confirm.createConfirm();
+          confirm.openConfirm(this.confirmOption);
+          event.once("confirm-event", async (data) => {
+            if (data === true) {
+              await employeeAPI.insert(this.employee);
+              notify("Thêm thành công", "success", 2000);
+              this.isChange = false;
+
+              this.onCancelClicked();
+            }
+          });
+        }
+      } else notify("Vui lòng nhập đủ trường bắt buộc", "warning", 2000);
+    },
+
+    onChangeValue() {
+      this.isChange = true;
     },
   },
   async created() {

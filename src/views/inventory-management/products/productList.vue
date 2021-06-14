@@ -3,7 +3,7 @@
     <vue-list
       :data="listData"
       :header="product.header"
-      totalElements="3"
+      :totalElements="totalElements"
       title="Danh Sách Sản Phẩm"
       @createClicked="onCreateClicked()"
       @deleteClicked="onDeleteClicked($event)"
@@ -11,7 +11,7 @@
       :headerSelecBox="headerSelecBox"
       name="product"
       placeholder="Tìm kiếm theo tên hoặc mã sản phẩm"
-      @onFilter="onHandleFilter()"
+      @onFilter="onFilter($event)"
       add
     ></vue-list>
     <product-detail
@@ -35,27 +35,34 @@ export default {
       status,
       product,
       detailVisible: false,
+      totalElements: 0,
       updateId: 0,
       listData: [],
+      payload: {
+        pageSize: 25,
+        offSet: 0,
+        param: "",
+        filter: [],
+      },
       headerSelecBox: [
         {
           class: "category",
           title: "Loại",
           data: category.category,
-          value: "0",
+          value: "-1",
         },
       ],
     };
   },
   methods: {
-    async onHandleFilter() {
-      const response = await productAPI.getById(1);
-      this.listData = response.data;
+    onFilter(payload) {
+      this.payload = { ...payload };
+      this.getAll();
     },
     // lấy dữ liệu từ serve
     async getAll() {
-      const response = await productAPI.getAll();
-
+      const response = await productAPI.paging(this.payload);
+      this.totalElements = response.totalElement;
       this.listData = response.data;
     },
     async onHandleCreateSuccess() {
