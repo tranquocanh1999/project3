@@ -15,6 +15,15 @@ class BillAPI extends BaseAPI {
   payMomo(body) {
     return BaseAPIConfig.post(`${this.controler}/pay-momo`, body);
   }
+
+  /**
+   *
+   * @param {*} body
+   * @returns
+   */
+  updateQuantity(body) {
+    return BaseAPIConfig.post(`${this.controler}/update-quantity`, body);
+  }
 }
 
 export default new BillAPI();

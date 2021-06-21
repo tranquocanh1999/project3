@@ -8,7 +8,7 @@
         class="justify-content-center align-items-center "
         v-if="errorCode != 0"
       >
-        <div class="icon-error ml-50"></div>
+        <div class="icon-error ml-50 mb-20"></div>
         <div>{{ message }}</div>
         <div>Vui lòng ấn trở về để quay lại trang thanh toán</div>
       </div>
@@ -17,7 +17,7 @@
         class=" justify-content-center align-items-center"
         v-if="errorCode == 0"
       >
-        <div class="icon-success ml-50"></div>
+        <div class="icon-success ml-50 mb-20"></div>
         <div>{{ message }}</div>
         <div>Vui lòng ấn trở về để quay lại trang thanh toán</div>
       </div>
@@ -43,9 +43,17 @@ export default {
   },
   created() {
     this.errorCode = this.$route.query.errorCode;
-    this.message = this.$route.query.message;
+    this.message = this.$route.query.localMessage;
     if (this.errorCode != 0) {
-      billAPI.delete("'" + this.$route.query.orderId + "'");
+      var products = JSON.parse(localStorage.getItem("products"));
+      billAPI.updateQuantity(products);
+      var bill = {
+        id: this.$route.query.orderId,
+        status: "2",
+        description: this.$route.query.localMessage,
+      };
+      billAPI.update(this.$route.query.orderId, bill);
+      localStorage.removeItem("products");
     }
   },
 };

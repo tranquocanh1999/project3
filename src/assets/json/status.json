@@ -33,6 +33,19 @@
             "name": "Nghỉ làm"
         }
     ],
+    "bill": [{
+        "id": "-1",
+        "name": "Tất cả"
+    },
+    {
+        "id": "1",
+        "name": "Đơn đã được giao"
+    },
+    {
+        "id": "2",
+        "name": "Đã hủy đơn"
+    }
+],
     "employeePosition": [{
             "id": "-1",
             "name": "Tất cả"

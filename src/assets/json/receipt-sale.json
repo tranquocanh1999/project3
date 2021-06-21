@@ -33,6 +33,14 @@
       "type": "number"
     },
     {
+      "id": 6,
+      "class": "status",
+      "name": "Trạng thái đơn hàng",
+      "width": "350",
+      "isFilter": false,
+      "type": "selectBox"
+    },
+    {
       "id": 4,
       "class": "createDate",
       "name": "Ngày bán",

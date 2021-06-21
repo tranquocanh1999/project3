@@ -1,7 +1,8 @@
 <template>
-  <div class="dx-field d-block mt-10">
+  <div class="dx-field d-block mt-10" :class="{ 'd-flex flex-start': flex }">
     <div class="dx-field-label">
       {{ label }} <span v-if="required" style="color:red">*</span>
+      <span v-if="flex">:</span>
     </div>
     <div class="dx-field-value" :class="[messageErr === '' ? '' : 'error']">
       <slot></slot>
@@ -29,6 +30,10 @@
 export default {
   name: "field",
   props: {
+    flex: {
+      type: Boolean,
+      default: false,
+    },
     label: {
       type: String,
       default: "",

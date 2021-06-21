@@ -128,8 +128,8 @@ export default {
       default: false,
     },
     totalElements: {
-      type: String,
-      default: "0",
+      type: Number,
+      default: 0,
     },
     paging: {
       type: Boolean,
@@ -179,6 +179,12 @@ export default {
       if (this.name === "product") {
         if (value.column.name === "category")
           return Vue.filter("productCategory")(value.value);
+      }
+      console.log(value.column.name);
+      console.log(this.name);
+      if (this.name === "bill") {
+        if (value.column.name === "status")
+          return Vue.filter("billStatus")(value.value);
       }
     },
 

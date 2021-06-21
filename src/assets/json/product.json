@@ -30,7 +30,7 @@
             "type": "number"
         },
         {
-            "id": 5,
+            "id": 6,
             "class": "category",
             "name": "Loại",
             "width": "250",

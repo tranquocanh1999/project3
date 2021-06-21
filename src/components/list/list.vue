@@ -105,7 +105,6 @@
           @onChangePageSize="onChangePageSize"
           @onChangePage="onChangePage"
           selectionMode
-          :selecBox="selectBox"
           :deleteMode="deleteMode"
           :name="name"
           paging
@@ -135,8 +134,8 @@ export default {
       default: "",
     },
     totalElements: {
-      type: String,
-      default: "0",
+      type: Number,
+      default: 0,
     },
     header: {
       type: [Array, Object],

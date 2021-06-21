@@ -58,4 +58,10 @@ export default class BaseAPI {
   deletes(id) {
     return BaseAPIConfig.post(`${this.controler}/multiple-delete`, id);
   }
+  /**
+   * Phương thức lấy dữ liệu theo ids
+   */
+  getByIds(id) {
+    return BaseAPIConfig.get(`${this.controler}/ids`, id);
+  }
 }

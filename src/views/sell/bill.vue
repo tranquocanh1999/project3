@@ -77,6 +77,27 @@
             caption="Số lượng"
           />
           <DxColumn width="250" data-field="priceOut" caption="Giá tiền" />
+          <DxColumn width="250" cell-template="actions" />
+          <template #actions="{ data }">
+            <vue-button
+              class="ms-button-danger"
+              :iconStyle="{
+                width: '24px',
+                height: '20px',
+                maskPosition: '-170px -26px',
+                backgroundColor: 'white',
+              }"
+              :buttonStyle="{
+                width: '40px',
+                marginRight: '5px',
+                marginLeft: '-15px',
+                backgroundColor: 'red',
+                marginLeft: 'auto',
+              }"
+              @onClick="onDeleteProductClicked(data)"
+            ></vue-button>
+          </template>
+
           <template #quantityBuy="{ data }">
             <DxNumberBox
               :value.sync="data.value"
@@ -166,13 +187,15 @@
         <DxNumberBox
           :value.sync="bill.promotion"
           :format="bill.promotion ? '#,### VNĐ' : '#,###'"
+          :max="bill.amount"
           :min="0"
         />
       </div>
       <div class="bill-pay-infor ">
         <h6>Thông tin thanh toán</h6>
         <div class="infor mt-10">
-          Số tiền phải trả: {{ (bill.amount - bill.promotion) | currency_vnd }}
+          Số tiền phải trả:
+          {{ (bill.amount - bill.promotion) | currency_vnd }}
         </div>
         <div class="infor d-flex">
           <div>Thanh toán bằng momo</div>
@@ -415,20 +438,39 @@ export default {
           customerId: this.bill.customer.id,
           customerName: this.bill.customer.customerName,
           amount: this.bill.amount,
-          promotion: this.bill.promotion,
+          promotion: this.bill.promotion ? this.bill.promotion : 0,
           product: JSON.stringify(product),
         };
         if (!this.momoPay) {
           billAPI.insert(bill);
           window.location.replace(
-            "http://localhost:8080/success?errorCode=0&message=Success"
+            "http://localhost:8080/success?errorCode=0&localMessage='Thanh toán thành công'"
           );
         } else {
           var res = await billAPI.payMomo(bill);
           window.location.replace(res.payUrl);
           console.log(res);
         }
+        localStorage.setItem(
+          "products",
+          JSON.stringify(this.bill.billProducts)
+        );
+        this.onUpdateQuantity();
       }
+    },
+    onUpdateQuantity() {
+      this.bill.billProducts.forEach(
+        (e) => (e.quantity = e.quantity - e.quantityBuy)
+      );
+      billAPI.updateQuantity(this.bill.billProducts);
+    },
+    onDeleteProductClicked(e) {
+      var data = e.data;
+      this.bill.promotion = 0;
+      this.bill.amount = this.bill.amount - data.priceOut * data.quantityBuy;
+      this.bill.billProducts = this.bill.billProducts.filter(
+        (item) => item.id != data.id
+      );
     },
   },
   async created() {

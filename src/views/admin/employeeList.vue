@@ -12,7 +12,6 @@
       title="Danh Sách Nhân Viên"
       name="employee"
       :headerSelecBox="headerSelecBox"
-      :selecBox="selecBox"
       add
     ></vue-list>
     <employee-detail

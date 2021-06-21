@@ -16,6 +16,7 @@ Vue.filter("employeePosition", function(value) {
     return "Nhân viên kho";
   }
 });
+
 Vue.filter("employeeStatus", function(value) {
   if (value == 1) {
     return "Đang làm việc";
@@ -25,6 +26,15 @@ Vue.filter("employeeStatus", function(value) {
   }
   if (value == 3) {
     return "Nghỉ làm";
+  }
+});
+
+Vue.filter("billStatus", function(value) {
+  if (value == 1) {
+    return "Đơn đã được giao";
+  }
+  if (value == 2) {
+    return "Đã hủy đơn";
   }
 });
 Vue.filter("productCategory", function(value) {
