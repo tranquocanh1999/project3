@@ -427,11 +427,13 @@ export default {
         notify("Mục sản phẩm không được để trống", "error", 2000);
       } else {
         var product = {};
+        var numberOfProducts = 0;
         this.bill.billProducts.forEach((e) => {
           product[e.id] = {
             price: e.priceOut,
             quantity: e.quantityBuy,
           };
+          numberOfProducts += e.quantityBuy;
         });
 
         var bill = {
@@ -440,6 +442,7 @@ export default {
           amount: this.bill.amount,
           promotion: this.bill.promotion ? this.bill.promotion : 0,
           product: JSON.stringify(product),
+          numberOfProducts: numberOfProducts,
         };
         if (!this.momoPay) {
           billAPI.insert(bill);

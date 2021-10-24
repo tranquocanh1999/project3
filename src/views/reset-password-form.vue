@@ -4,7 +4,11 @@
       <dx-item
         data-field="email"
         editor-type="dxTextBox"
-        :editor-options="{ stylingMode: 'filled', placeholder: 'Email', mode: 'email' }"
+        :editor-options="{
+          stylingMode: 'filled',
+          placeholder: 'Email',
+          mode: 'email',
+        }"
       >
         <dx-required-rule message="Email không được để trống" />
         <dx-email-rule message="Email không đúng định dạng" />
@@ -23,15 +27,20 @@
       <dx-item>
         <template #default>
           <div class="login-link">
-           <router-link to="/login-form">Đăng nhập</router-link>
+            <router-link to="/login-form">Đăng nhập</router-link>
           </div>
         </template>
       </dx-item>
       <template #resetTemplate>
         <div>
           <span class="dx-button-text">
-              <dx-load-indicator v-if="loading" width="24px" height="24px" :visible="true" />
-              <span v-if="!loading">Cài lại mật khẩu</span>
+            <dx-load-indicator
+              v-if="loading"
+              width="24px"
+              height="24px"
+              :visible="true"
+            />
+            <span v-if="!loading">Cài lại mật khẩu</span>
           </span>
         </div>
       </template>
@@ -46,14 +55,14 @@ import DxForm, {
   DxButtonItem,
   DxButtonOptions,
   DxRequiredRule,
-  DxEmailRule
-} from 'devextreme-vue/form';
-import DxLoadIndicator from 'devextreme-vue/load-indicator';
-import notify from 'devextreme/ui/notify';
+  DxEmailRule,
+} from "devextreme-vue/form";
+import DxLoadIndicator from "devextreme-vue/load-indicator";
+import notify from "devextreme/ui/notify";
 
 import auth from "../auth";
 
-const notificationText = 'We\'ve sent a link to reset your password. Check your inbox.';
+const notificationText = "Chúng tôi đã gửi mật khẩu qua hòm thư của bạn.";
 
 export default {
   components: {
@@ -64,13 +73,13 @@ export default {
     DxButtonOptions,
     DxRequiredRule,
     DxEmailRule,
-    DxLoadIndicator
+    DxLoadIndicator,
   },
   data() {
     return {
-        formData: {},
-        loading: false
-    }
+      formData: {},
+      loading: false,
+    };
   },
   methods: {
     onSubmit: async function() {
@@ -84,11 +93,11 @@ export default {
         this.$router.push("/login-form");
         notify(notificationText, "success", 2500);
       } else {
-        notify(result.message, "error", 2000);
+        notify(result.message, "error", 3000);
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss">

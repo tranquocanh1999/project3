@@ -1,12 +1,15 @@
 <template>
   <div>
-    <h2 class="content-block">Profile</h2>
+    <h2 class="content-block">Thông tin cá nhân</h2>
 
     <div class="content-block dx-card responsive-paddings">
       <div class="form-avatar">
         <img :src="imageSrc" />
       </div>
-      <span>{{ formData.Notes }}</span>
+      <div>
+        <div class="text-large">{{ formData.fullName }}</div>
+        <div class="text-normal">{{ formData.address }}</div>
+      </div>
     </div>
 
     <div class="content-block dx-card responsive-paddings">
@@ -15,50 +18,145 @@
         label-location="top"
         :form-data="formData"
         :colCountByScreen="colCountByScreen"
-      />
+      >
+        <DxItem :label="{ text: 'Mã nhân viên' }" dataField="employeeCode" />
+        <DxItem
+          :label="{ text: 'Ngày sinh' }"
+          dataField="dateOfBirth"
+          editor-type="dxDateBox"
+        />
+        <DxItem
+          :label="{ text: 'Giới tính' }"
+          dataField="gender"
+          :editor-options="{ value: !this.formData.gender ? 'Nam' : 'Nữ' }"
+        />
+        <DxItem :label="{ text: 'Email' }" dataField="email" />
+        <DxItem :label="{ text: 'Số điện thoại' }" dataField="phoneNumber" />
+        <DxItem :label="{ text: 'Số CMND' }" dataField="identityCardNumber" />
+        <DxItem
+          :label="{ text: 'Ngày cấp' }"
+          dataField="issueDate"
+          editor-type="dxDateBox"
+        />
+        <DxItem :label="{ text: 'Nơi cấp' }" dataField="issuePlace" />
+        <DxItem :label="{ text: 'Mã số thuế cá nhân' }" dataField="taxcode" />
+        <DxItem :label="{ text: 'Lương cơ bản' }" dataField="basicSalary" />
+        <DxItem
+          :label="{ text: 'Ngày bắt đầu vào làm' }"
+          dataField="joinDate"
+          editor-type="dxDateBox"
+        />
+        <DxItem
+          :label="{ text: 'Vị trí' }"
+          dataField="position"
+          :editor-options="{
+            value: filter(this.formData.position),
+          }"
+        />
+      </dx-form>
+      <div class="d-flex">
+        <button
+          type="button"
+          class="btn vue-button-primary mt-20 ml-auto"
+          @click="onUpdateInforClicked()"
+        >
+          Sửa thông tin cá nhân
+        </button>
+        <button
+          type="button"
+          class="btn vue-button-primary mt-20 mr-20 ml-20"
+          @click="onChangePassClicked()"
+        >
+          Đổi mật khẩu
+        </button>
+      </div>
     </div>
+    <employee-detail
+      v-if="detailVisible"
+      @success="onHandleUpdateSuccess()"
+      :id="formData.id"
+      :popupVisible.sync="detailVisible"
+      isProfile
+    ></employee-detail>
+
+    <DxPopup
+      :visible="popupVisible"
+      :drag-enabled="false"
+      :show-title="true"
+      :width="450"
+      :height="550"
+      :showCloseButton="false"
+    >
+      <DxToolbarItem text="Đổi mật khẩu" location="before"> </DxToolbarItem>
+      <DxToolbarItem
+        widget="dxButton"
+        :options="closeButton"
+        location="after"
+      ></DxToolbarItem>
+      <ChangePassWordForm />
+    </DxPopup>
   </div>
 </template>
 
 <script>
+import Vue from "vue";
+import ChangePassWordForm from "./change-password-form";
 import DxForm from "devextreme-vue/form";
+import auth from "../auth";
 
 export default {
   props: {
-    picture: String
+    picture: String,
   },
-  data() {
-    const picture = "images/employees/06.png";
-    return {
-      imageSrc: `https://js.devexpress.com/Demos/WidgetsGallery/JSDemos/${picture}`,
-      formData: {
-        ID: 7,
-        FirstName: "Sandra",
-        LastName: "Johnson",
-        Prefix: "Mrs.",
-        Position: "Controller",
-        Picture: picture,
-        BirthDate: new Date("1974/11/15"),
-        HireDate: new Date("2005/05/11"),
-        Notes:
 
-          "Sandra is a CPA and has been our controller since 2008. " +
-          "She loves to interact with staff so if you`ve not met her, be certain to say hi." +
-          "\r\n\r\n" +
-          "Sandra has 2 daughters both of whom are accomplished gymnasts.",
-        Address: "4600 N Virginia Rd."
+  data() {
+    return {
+      popupVisible: false,
+      detailVisible: false,
+      imageSrc: ``,
+      formData: {},
+      closeButton: {
+        type: "close",
+        icon: "close",
+        onClick: () => {
+          this.popupVisible = false;
+        },
       },
       colCountByScreen: {
         xs: 1,
         sm: 2,
         md: 3,
-        lg: 4
-      }
+        lg: 4,
+      },
     };
   },
   components: {
-    DxForm
-  }
+    DxForm,
+    ChangePassWordForm,
+  },
+  methods: {
+    filter(value) {
+      return Vue.filter("employeePosition")(value);
+    },
+    onUpdateInforClicked() {
+      this.detailVisible = true;
+    },
+    onChangePassClicked() {
+      this.popupVisible = true;
+    },
+    onHandleUpdateSuccess() {
+      auth.find(this.formData.id).then((e) => {
+        this.imageSrc = e.data.image;
+        this.formData = e.data;
+      });
+    },
+  },
+  created() {
+    auth.getUser().then((e) => {
+      this.imageSrc = e.data.image;
+      this.formData = e.data;
+    });
+  },
 };
 </script>
 

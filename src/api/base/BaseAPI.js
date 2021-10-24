@@ -1,6 +1,8 @@
 import BaseAPIConfig from "@/api/base/BaseAPIConfig.js";
 
 export default class BaseAPI {
+  user = "";
+
   constructor() {
     this.controler = null;
   }
@@ -38,7 +40,11 @@ export default class BaseAPI {
    * @returns
    */
   insert(body) {
-    return BaseAPIConfig.post(`${this.controler}`, body);
+    this.user = JSON.parse(localStorage.getItem("user"));
+    return BaseAPIConfig.post(`${this.controler}`, {
+      ...body,
+      CreateBy: this.user.fullName,
+    });
   }
   /**
    * Hàm cập nhật dữ liệu
@@ -62,6 +68,6 @@ export default class BaseAPI {
    * Phương thức lấy dữ liệu theo ids
    */
   getByIds(id) {
-    return BaseAPIConfig.get(`${this.controler}/ids`, id);
+    return BaseAPIConfig.get(`${this.controler}/ids/${id}`);
   }
 }

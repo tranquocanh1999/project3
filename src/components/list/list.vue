@@ -156,7 +156,7 @@ export default {
       default: false,
     },
     headerSelecBox: {
-      type: Array,
+      type: [Array, Object],
       default: null,
     },
 

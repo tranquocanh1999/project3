@@ -1,8 +1,8 @@
 <template>
-  <div class="dx-field d-block mt-10" :class="{ 'd-flex flex-start': flex }">
-    <div class="dx-field-label">
+  <div class="dx-field d-block mt-10" :class="{ 'd-flex': flex }">
+    <div class="dx-field-label" :class="{ 'd-flex w-50': flex }">
       {{ label }} <span v-if="required" style="color:red">*</span>
-      <span v-if="flex">:</span>
+      <div v-if="flex">:</div>
     </div>
     <div class="dx-field-value" :class="[messageErr === '' ? '' : 'error']">
       <slot></slot>
@@ -15,6 +15,7 @@
         @mouseleave="toggleDefault"
       ></div>
       <DxTooltip
+        v-if="targetID !== ''"
         :visible="visible"
         :close-on-outside-click="false"
         :position="'top'"

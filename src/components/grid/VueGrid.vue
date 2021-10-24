@@ -180,8 +180,6 @@ export default {
         if (value.column.name === "category")
           return Vue.filter("productCategory")(value.value);
       }
-      console.log(value.column.name);
-      console.log(this.name);
       if (this.name === "bill") {
         if (value.column.name === "status")
           return Vue.filter("billStatus")(value.value);

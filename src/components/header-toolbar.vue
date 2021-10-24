@@ -34,7 +34,7 @@
           <div>
             <dx-button
               class="user-button authorization"
-              :width="210"
+              style="minWidth:210px"
               height="100%"
               styling-mode="text"
             >

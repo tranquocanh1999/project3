@@ -13,7 +13,11 @@ class BillAPI extends BaseAPI {
    * @returns
    */
   payMomo(body) {
-    return BaseAPIConfig.post(`${this.controler}/pay-momo`, body);
+    this.user = JSON.parse(localStorage.getItem("user"));
+    return BaseAPIConfig.post(`${this.controler}/pay-momo`, {
+      ...body,
+      CreateBy: this.user.fullName,
+    });
   }
 
   /**

@@ -4,21 +4,29 @@
       <dx-item
         data-field="email"
         editor-type="dxTextBox"
-        :editor-options="{ stylingMode: 'filled', placeholder: 'Email', mode: 'email' }"
+        :editor-options="{
+          stylingMode: 'filled',
+          placeholder: 'Email',
+          mode: 'email',
+        }"
       >
         <dx-required-rule message="Email không được để trống" />
         <dx-email-rule message="Email không đúng định dạng " />
         <dx-label :visible="false" />
       </dx-item>
       <dx-item
-        data-field='password'
-        editor-type='dxTextBox'
-        :editor-options="{ stylingMode: 'filled', placeholder: 'Mật khẩu', mode: 'password' }"
+        data-field="password"
+        editor-type="dxTextBox"
+        :editor-options="{
+          stylingMode: 'filled',
+          placeholder: 'Mật khẩu',
+          mode: 'password',
+        }"
       >
         <dx-required-rule message="Mật khẩu không được để trống" />
         <dx-label :visible="false" />
       </dx-item>
-     
+
       <dx-button-item>
         <dx-button-options
           width="100%"
@@ -35,18 +43,16 @@
           </div>
         </template>
       </dx-item>
-      
-      <dx-button-item>
-        <dx-button-options
-          text="Tạo tài khoản mới"
-          width="100%"
-          :on-click="onCreateAccountClick"
-        />
-      </dx-button-item>
+
       <template #signInTemplate>
         <div>
           <span class="dx-button-text">
-            <dx-load-indicator v-if="loading" width="24px" height="24px" :visible="true" />
+            <dx-load-indicator
+              v-if="loading"
+              width="24px"
+              height="24px"
+              :visible="true"
+            />
             <span v-if="!loading">Đăng nhập</span>
           </span>
         </div>
@@ -56,16 +62,14 @@
 </template>
 
 <script>
-
-import notify from 'devextreme/ui/notify';
-
+import notify from "devextreme/ui/notify";
 import auth from "../auth";
 
 export default {
   data() {
     return {
       formData: {},
-      loading: false
+      loading: false,
     };
   },
   methods: {
@@ -83,9 +87,9 @@ export default {
       } else {
         this.$router.push(this.$route.query.redirect || "/home");
       }
-    }
+    },
   },
-  };
+};
 </script>
 
 <style lang="scss">

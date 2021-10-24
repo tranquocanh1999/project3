@@ -17,6 +17,14 @@
       "type": "text"
     },
     {
+      "id": 8,
+      "class": "numberOfProducts",
+      "name": "Số lượng sản phẩm",
+      "width": "350",
+      "isFilter": true,
+      "type": "number"
+    },
+    {
       "id": 3,
       "class": "amount",
       "name": "Tổng tiền",
@@ -47,6 +55,14 @@
       "width": "330",
       "isFilter": true,
       "type": "date"
+    },
+    {
+      "id": 7,
+      "class": "createBy",
+      "name": "Người bán",
+      "width": "330",
+      "isFilter": true,
+      "type": "text"
     }
   ],
   "data": [

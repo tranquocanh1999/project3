@@ -19,3 +19,6 @@
     margin-right: 0!important;
     width:100%!important;
 }
+
+.dx-texteditor.dx-editor-underlined.dx-state-disabled::after, .dx-texteditor.dx-editor-underlined.dx-state-readonly.dx-state-hover::after, .dx-texteditor.dx-editor-underlined.dx-state-readonly::after {
+    border-bottom-style: solid;}

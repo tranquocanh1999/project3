@@ -7,12 +7,25 @@ class EmployeeAPI extends BaseAPI {
     this.controler = "Employees";
   }
 
-  /**
-   * Phương thức lấy tất cả dữ liệu
-   */
   login(email, password) {
     return BaseAPIConfig.get(
       `${this.controler}/login?email=${email}&password=${password}`
+    );
+  }
+
+  /**
+   * Phương thức lấy tất cả dữ liệu
+   */
+  resetPassword(email) {
+    return BaseAPIConfig.get(`${this.controler}/forgotPassword?email=${email}`);
+  }
+
+  /**
+   * Phương thức lấy tất cả dữ liệu
+   */
+  changePassword(email, oldPass, newPass) {
+    return BaseAPIConfig.get(
+      `${this.controler}/changePass?email=${email}&oldPass=${oldPass}&newPass=${newPass}`
     );
   }
 }

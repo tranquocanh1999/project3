@@ -116,6 +116,7 @@
                   <DxTextBox
                     :value.sync="employee.email"
                     :onValueChanged="onChangeValue"
+                    :read-only="isUpdate"
                   />
                 </field>
                 <field label="Ngày cấp">
@@ -155,6 +156,7 @@
                       value-expr="id"
                       :value.sync="employee.position"
                       :onValueChanged="onChangeValue"
+                      :read-only="isProfile"
                     />
                   </field>
                   <field
@@ -175,6 +177,7 @@
                       dateSerializationFormat="yyyy-MM-ddTHH:mm:ss"
                       type="date"
                       :onValueChanged="onChangeValue"
+                      :read-only="isProfile"
                     />
                   </field>
                 </div>
@@ -185,6 +188,7 @@
                       format="#,###"
                       :min="0"
                       :onValueChanged="onChangeValue"
+                      :read-only="isProfile"
                     />
                   </field>
                   <field label="Tình trạng làm việc">
@@ -194,6 +198,7 @@
                       value-expr="id"
                       :value.sync="employee.status"
                       :onValueChanged="onChangeValue"
+                      :read-only="isProfile"
                     />
                   </field>
                 </div>
@@ -238,7 +243,10 @@ export default {
       type: Boolean,
       default: false,
     },
-
+    isProfile: {
+      type: Boolean,
+      default: false,
+    },
     id: {
       type: [String, Number],
       default: 0,
@@ -268,7 +276,7 @@ export default {
         gender: "",
       },
       employee: {
-        dateOfBirth: "",
+        dateOfBirth: new Date(),
         gender: "",
         email: "",
         employeeCode: "",
@@ -292,7 +300,7 @@ export default {
       ],
 
       employeeDefault: {
-        dateOfBirth: "",
+        dateOfBirth: new Date(),
         gender: "",
         email: "",
         employeeCode: "",
@@ -354,11 +362,16 @@ export default {
           confirm.openConfirm(this.confirmOption);
           event.once("confirm-event", async (data) => {
             if (data === true) {
-              await employeeAPI.insert(this.employee);
-              notify("Thêm thành công", "success", 2000);
-              this.isChange = false;
+              const data = await employeeAPI.insert(this.employee);
+              console.log(data);
+              if (data !== 1) {
+                this.errMsg.email = "Email đã tồn tại.";
+              } else {
+                notify("Thêm thành công", "success", 2000);
+                this.isChange = false;
 
-              this.onCancelClicked();
+                this.onCancelClicked();
+              }
             }
           });
         }
